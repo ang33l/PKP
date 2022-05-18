@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">Wyszukaj połączenie kolejowe</a></li>
+                    <li><a class="nav-link scrollto" href="<?= base_url() ?>search">Wyszukaj połączenie kolejowe</a></li>
                     <li><a class="nav-link scrollto" href="#services">Kup bilet</a></li>
                     <li><a class="nav-link scrollto" href="#departments">Kontakt</a></li>
                     <li class="dropdown"><a href="#"><span>Strefa pasażera</span> <i class="bi bi-chevron-down"></i></a>
@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="container">
             <h1>Witaj!</h1>
             <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, placeat!</h2>
-            <a href="#about" class="btn-get-started scrollto">Znajdź połączenie kolejowe</a>&nbsp;
+            <a href="<?= base_url() ?>search" class="btn-get-started scrollto">Znajdź połączenie kolejowe</a>&nbsp;
             <a href="#about" class="btn-get-started scrollto">Kup bilet</a>
         </div>
     </section>
