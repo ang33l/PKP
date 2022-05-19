@@ -66,9 +66,27 @@ class User extends CI_Controller {
 
     public function verifyRegister()
     {
-        if($this->input->post('login') && $this->input->post('pass') &&
-        $this->input->post('repass') && $this->input->post('email') &&
-        $this->input->post('firstname') && $this->input->post('lastname')){
+        if(!$this->verifyPostFromRegister()){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'danger',
+                        'message' => 'Nieprawidłowy dane!'
+                    )));
+        }
+
+        $this->load->model('User_model');
+        $user = $this->User_model;
+        $user->login = $this->input->post("login");
+        $user->pass = $this->input->post("pass");
+        $user->email = $this->input->post('email');
+        $user->first_name = $this->input->post('firstname');
+        $user->last_name = $this->input->post('lastname');
+
+        $response = $user->register();
+        return $response;
+        /*
+        if(verifyPostFromRegister()){
             if($this->input->post('pass') == $this->input->post('repass')){
                 $sql = 'INSERT INTO user (user_id, user_name, password) VALUES (DEFAULT, ?, ?);';
                 $query = $this->db->query($sql, array(
@@ -85,7 +103,7 @@ class User extends CI_Controller {
         }else{
             echo "0";
             die();
-        }
+        }*/
         
     }
     public function logout()
@@ -93,5 +111,13 @@ class User extends CI_Controller {
         $this->session->sess_destroy();
         header("Location: ".base_url());
         die();
+    }
+
+    private function verifyPostFromRegister()
+    {
+        return $this->input->post('login') && $this->input->post('pass') &&
+            $this->input->post('repass') && $this->input->post('email') &&
+            $this->input->post('firstname') && $this->input->post('lastname') &&
+            ($this->input->post('pass') == $this->input->post('repass'));
     }
 }

@@ -108,11 +108,15 @@ function myFunction() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            if (xmlHttp.responseText == "1") {
-                console.log(xmlHttp.responseText);
-                window.location.replace("<?= base_url() ?>");
-            } else {
-                document.getElementById("error-window").style.display = "";
+            var response = JSON.parse(xmlHttp.responseText);
+            document.getElementById("error-window").style.display = "";
+            document.getElementById("error-window").innerHTML = 
+            '<span class="text-' + 
+            response.type + '">' +
+            response.message +
+            '</span>';
+            if(response.type == "success"){
+                setTimeout('window.location.replace("<?= base_url() ?>")', 1000);
             }
         }
     }

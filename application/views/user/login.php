@@ -99,7 +99,7 @@ function myFunction() {
             response.message +
             '</span>';
             if(response.type == "success"){
-                setInterval(window.location.replace("<?= base_url() ?>"), 500);
+                setTimeout('window.location.replace("<?= base_url() ?>")', 1000);
             }
         }
     }
