@@ -69,7 +69,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
 
                     <div class="mb-3" id="error-window" style="display:none">
-                        <span class="text-danger">Nieprawidłowy login lub hasło!</span>
                     </div>
 
                     <button type="submit" class="btn btn-primary" id="submitbtn">Zaloguj się</button>
@@ -92,11 +91,15 @@ function myFunction() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            if (xmlHttp.responseText == "1") {
-                console.log(xmlHttp.responseText);
-                window.location.replace("<?= base_url() ?>");
-            } else {
-                document.getElementById("error-window").style.display = "";
+            var response = JSON.parse(xmlHttp.responseText);
+            document.getElementById("error-window").style.display = "";
+            document.getElementById("error-window").innerHTML = 
+            '<span class="text-' + 
+            response.type + '">' +
+            response.message +
+            '</span>';
+            if(response.type == "success"){
+                setInterval(window.location.replace("<?= base_url() ?>"), 500);
             }
         }
     }

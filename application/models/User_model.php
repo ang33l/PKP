@@ -9,6 +9,12 @@ class User_model extends CI_Model {
     public $user_id;
     public $user_privilage;
 
+    public function login()
+    {
+        $sql =  'SELECT user_id, user_name, password FROM user WHERE user_name=?;';
+        $query = $this->db->query($sql, array($this->login));
+        return $query;
+    }
     public function change_password(){}
     public function change_user_privilage(){}
     public function delete_user(){}

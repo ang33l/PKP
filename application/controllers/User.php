@@ -15,38 +15,54 @@ class User extends CI_Controller {
 
 	public function verifyLogin()
 	{
-		if($this->input->post("login") && $this->input->post("pass")){
-            $sql =  'SELECT user_id, user_name, password FROM user WHERE user_name=?;';
-            $query = $this->db->query($sql, array($this->input->post("login")));
-            if($query->result()){
-                foreach($query->result() as $row){
-                    if(password_verify($this->input->post("pass"), $row->password)){
-                        $this->session->set_userdata(array(
-                            'loggedIn' => true,
-                            'user_id' => $row->user_id,
-                            'user_name' => $row->user_name
-                        ));
-                        //return $this->output->set_content_type('application/json')->set_status_header(200)->set_output(json_encode(array('errno' => true,)));
-                        //header("Location: ".base_url().'admin');
-                        echo "1";
-                        die();
-                    }else {
-                        echo "0";
-                        die();
-                        //header("Location: ".base_url()."login/index/1");
-                    }
-                }
+        if(!$this->input->post("login") || !$this->input->post("pass")){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nieprawidłowy login lub hasło!'
+                )));
+        }
+
+        $this->load->model('User_model');
+        $user = $this->User_model;
+        $user->login = $this->input->post("login");
+        $user->pass = $this->input->post("pass");
+
+        $query = $user->login();
+
+        if(!$query->result()){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nieprawidłowy login lub hasło!'
+                )));
+        }
+        foreach($query->result() as $row){
+            if(password_verify($this->input->post("pass"), $row->password)){
+                $this->session->set_userdata(array(
+                    'loggedIn' => true,
+                    'user_id' => $row->user_id,
+                    'user_name' => $row->user_name
+                ));
+                return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'success',
+                        'message' => 'Pomyślnie zalogowano!'
+                    )));
             } else {
-                echo "0";
-            die();
-                //header("Location: ".base_url()."login/index/1");
+                return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'danger',
+                        'message' => 'Nieprawidłowy login lub hasło!'
+                    )));
             }
-        }else{
-            //header("Location: ".base_url()."login/index/1");
-            echo "0";
-            die();
         }
 	}
+
 
     public function verifyRegister()
     {
