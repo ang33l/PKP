@@ -13,6 +13,11 @@ class User extends CI_Controller {
         $this->load->view('user/register');
     }
 
+    public function account()
+    {
+        $this->load->view('user/account');
+    }
+
 	public function verifyLogin()
 	{
         if(!$this->input->post("login") || !$this->input->post("pass")){

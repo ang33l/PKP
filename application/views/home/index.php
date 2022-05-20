@@ -9,9 +9,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PKP Online</title>
-    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -24,9 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="<?= base_url() ?>search">Wyszukaj połączenie kolejowe</a></li>
-                    <li><a class="nav-link scrollto" href="#services">Kup bilet</a></li>
+                    <li><a class="nav-link active" href="#hero">Home</a></li>
+                    <li><a class="nav-link" href="<?= base_url() ?>search">Wyszukaj połączenie kolejowe</a></li>
+                    <li><a class="nav-link" href="<?= base_url() ?>ticket/buy">Kup bilet</a></li>
                     <li><a class="nav-link scrollto" href="<?= base_url() ?>#contact">Kontakt</a></li>
                     <li class="dropdown"><a href="#"><span>Strefa pasażera</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
