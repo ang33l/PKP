@@ -88,7 +88,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </header>
     <div class="bg">
         <div class="center-screen">
-            <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
+            <div class="col-xs-12 col-md-5 bg-light p-4 rounded">
                 <h2>Moje bilety</h2>
                 <p>PKP Online</p>
                 <hr>
@@ -98,11 +98,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <td>ID biletu	</td>
                             <td>ID user	</td>
                             <td>ID polaczenia	</td>
-                            <td>ilosc	</td>
+                            <td>ID pociagu </td>
                             <td>miejsce	</td>
                             <td>przedzial</td>
                             <td>active</td>
                             <td>data zakupu</td>
+                            <td>start</td>
+                            <td>end</td>
                         </tr>
                         <?php foreach($records as $row){?>
                             
@@ -110,11 +112,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <td><?php echo $row->ticket_id; ?></td>
                             <td><?php echo $row->user_id; ?></td>
                             <td><?php echo $row->connection_id; ?></td>
-                            <td><?php echo $row->quantity; ?></td>
+                            <td><?php echo $row->train_id; ?></td>
                             <td><?php echo $row->position; ?></td>
                             <td><?php echo $row->compartment; ?></td>
                             <td><?php echo $row->active; ?></td>
                             <td><?php echo $row->buytime; ?></td>
+                            <td><?php echo $row->start; ?></td>
+                            <td><?php echo $row->end; ?></td>
                             <td>
                                 <a href="<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>" class="btn btn-primary">Anuluj</a>
                             </td>

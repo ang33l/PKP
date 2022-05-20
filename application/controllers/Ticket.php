@@ -27,7 +27,7 @@ class Ticket extends CI_Controller {
         $numSeats=$this->input->post('numSeats');
         $seats=$this->input->post('seats');
         $user_id = $this->session->user_id;
-		$response=$this->Ticket_model->saverecords($numSeats, $seats, $user_id); 
+		$response=$this->Ticket_model->saverecords($seats, $user_id); 
 		if($response==true) {
             ?>
             
