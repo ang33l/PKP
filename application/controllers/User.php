@@ -15,7 +15,11 @@ class User extends CI_Controller {
 
     public function account()
     {
-        $this->load->view('user/account');
+        $this->load->model('User_model');
+        $user = $this->User_model;
+        $user->user_id = $this->session->user_id;
+        $data['user_data'] = $user->get_user_data()->result()[0];
+        $this->load->view('user/account', $data);
     }
 
 	public function verifyLogin()
@@ -49,8 +53,6 @@ class User extends CI_Controller {
                 $this->session->set_userdata(array(
                     'loggedIn' => true,
                     'user_id' => $row->user_id,
-                    'user_name' => $row->user_name,
-                    'first_name' => "Jan"
                 ));
                 return $this->output->set_content_type('application/json', 'utf-8')
                     ->set_status_header(200)

@@ -51,6 +51,14 @@ class User_model extends CI_Model {
                     'message' => 'Pomyślnie zarejestrowano w serwisie!'
                 )));
     }
+
+    public function get_user_data()
+    {
+        $sql = 'SELECT email, first_name, last_name, user_name, ut.name FROM user  INNER JOIN user_type ut WHERE user_id=?;';
+        $query = $this->db->query($sql, array($this->session->user_id));
+        return $query;
+    }
+
     public function change_password(){}
     public function change_user_privilage(){}
     public function delete_user(){}
