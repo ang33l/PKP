@@ -89,29 +89,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
-            <?php if($this->session->loggedIn){ ?>
-                <h2>Kup bilet</h2>
+                <h2>Moje bilety</h2>
                 <p>PKP Online</p>
                 <hr>
-                <p>Kupno biletu na trasie [skąd] - [dokąd]</p>
-                <form action="<?= site_url() ?>ticket/confirmation" method="post"> 
-                    <div class="mb-3">
-                        <label for="NumberOfSeats" class="form-label">Ilość miejsc</label>
-                        <input name="numSeats" type="number" class="form-control formVal" id="NumberOfSeats" required min="0">
-                    </div>
-                    <div class="mb-3">
-                        <label for="ChooseSeats" class="form-label">Wybierz miejsca</label>
-                        <input name="seats" type="number" class="form-control formVal" id="ChooseSeats" required min="0">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" id="submitbtn">Kup bilet</button>
-                </form>
+                <p>Historia zakupionych biletów</p>
+                <table>
+                        <tr>
+                            <td>ID biletu	</td>
+                            <td>ID user	</td>
+                            <td>ID polaczenia	</td>
+                            <td>ilosc	</td>
+                            <td>miejsce	</td>
+                            <td>przedzial</td>
+                            <td>active</td>
+                            <td>data zakupu</td>
+                        </tr>
+                        <?php foreach($records as $row){?>
+                            
+                        <tr>
+                            <td><?php echo $row->ticket_id; ?></td>
+                            <td><?php echo $row->user_id; ?></td>
+                            <td><?php echo $row->connection_id; ?></td>
+                            <td><?php echo $row->quantity; ?></td>
+                            <td><?php echo $row->position; ?></td>
+                            <td><?php echo $row->compartment; ?></td>
+                            <td><?php echo $row->active; ?></td>
+                            <td><?php echo $row->buytime; ?></td>
+                            <td>
+                                <a href="<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>" class="btn btn-primary">Anuluj</a>
+                            </td>
+                        </tr>
+                        
+                        <?php }?>
+                    </table>
             </div>
-            <?php
-                } else { 
-                    redirect(base_url().'user/login');
-                }            
-            ?>
         </div>
     </div>
 </body>

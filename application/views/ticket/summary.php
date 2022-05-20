@@ -52,13 +52,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 
 <body>
+<header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="logo me-auto"><a href="index.html">PKP Online</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                    <li><a class="nav-link scrollto" href="#about">Wyszukaj połączenie kolejowe</a></li>
+                    <li><a class="nav-link scrollto" href="#services">Kup bilet</a></li>
+                    <li><a class="nav-link scrollto" href="#departments">Kontakt</a></li>
+                    <li class="dropdown"><a href="#"><span>Strefa pasażera</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <?php
+                              if($this->session->loggedIn){
+                            ?>
+                            <li><a href="<?= base_url() ?>user/account">Moje konto</a></li>
+                            <li><a href="<?= base_url() ?>user/logout">Wyloguj</a></li>
+                            <?php
+                            }
+                            else{
+                              ?>
+                            <li><a href="<?= base_url() ?>user/login">Logowanie</a></li>
+                            <li><a href="<?= base_url() ?>user/register">Rejestracja</a></li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+        </div>
+    </header>
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
                 <h2>Kup bilet</h2>
                 <p>PKP Online</p>
                 <hr>
-                <form action="javascript:myFunction()">
+                <form action="<?= site_url() ?>/ticket/addToBase" method="post"> 
                     <div class="mb-3">
                         <p>Trasa [skąd] - [dokąd]</p>
                         <p>Odjazd [hh-mm], przyjazd [hh-mm]</p>
@@ -72,12 +106,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         
                         <p>Wybierz płatność</p>
                         <div class="form-check">
-                            <input name="payment" type="radio" class="form-check-input"  id="ChoosePayment1">
+                            <input name="payment" type="radio" class="form-check-input" id="ChoosePayment1"  required>
                             <label class="form-check-label" for="ChoosePayment1">Zapłać później</label>
                             </div>
                         <div class="form-check">
-                            <input name="payment" type="radio" class="form-check-input"  id="ChoosePayment2">
-                            <label class="form-check-label" for="ChoosePayment2">PayU</label>
+                            <input name="payment" type="radio" class="form-check-input"  id="ChoosePayment2" required>
+                            <label class="form-check-label" for="ChoosePayment2">BLIK</label>
                         </div>
                         
                     </div>
@@ -90,27 +124,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </body>
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
-<script>
-function myFunction() {
-    var elements = document.getElementsByClassName("formVal");
-    var formData = new FormData();
-    for (var i = 0; i < elements.length; i++) {
-        formData.append(elements[i].name, elements[i].value);
-    }
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            if (xmlHttp.responseText == "1") {
-                console.log(xmlHttp.responseText);
-                window.location.replace("<?= base_url() ?>");
-            } else {
-                document.getElementById("error-window").style.display = "";
-            }
-        }
-    }
-    xmlHttp.open("post", "<?= base_url() ?>ticket/confirmation");
-    xmlHttp.send(formData);
-}
-</script>
 
 </html>
