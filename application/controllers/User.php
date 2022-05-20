@@ -44,7 +44,8 @@ class User extends CI_Controller {
                 $this->session->set_userdata(array(
                     'loggedIn' => true,
                     'user_id' => $row->user_id,
-                    'user_name' => $row->user_name
+                    'user_name' => $row->user_name,
+                    'first_name' => "Jan"
                 ));
                 return $this->output->set_content_type('application/json', 'utf-8')
                     ->set_status_header(200)

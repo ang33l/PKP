@@ -48,6 +48,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         transition: 0.4s;
         border-radius: 50px;
     }
+    .back {
+        text-align: left;
+    }
     </style>
 </head>
 
@@ -55,6 +58,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
+                <div class="back">
+                    <a href="javascript:history.back()"><i class="bi bi-chevron-left"></i> Powrót</a>
+                </div>
                 <h2>Rejestracja</h2>
                 <p>PKP Online</p>
                 <hr>
@@ -89,7 +95,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
 
                     <button type="submit" class="btn btn-primary" id="submitbtn">Zarejestruj się</button>
-                    <div class="mt-3">Masz już konto? <a href="<?= base_url() ?>user/register">Zaloguj się!</a>
+                    <div class="mt-3">Masz już konto? <a href="<?= base_url() ?>user/login">Zaloguj się!</a>
                     </div>
                 </form>
             </div>
@@ -105,6 +111,7 @@ function myFunction() {
     for (var i = 0; i < elements.length; i++) {
         formData.append(elements[i].name, elements[i].value);
     }
+    console.log(elements);
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
@@ -123,6 +130,21 @@ function myFunction() {
     xmlHttp.open("post", "<?= base_url() ?>user/verifyRegister");
     xmlHttp.send(formData);
 }
+function validatePasswords(){
+    var pass = document.getElementById("Password").value;
+    var repass = document.getElementById("RePassword").value;
+    var btn = document.getElementById("submitbtn");
+    if(pass == repass){
+        btn.disabled = false;
+        document.getElementById("error-window").innerHTML = "";
+    } else {
+        btn.disabled = true;
+        document.getElementById("error-window").style.display = "";
+        document.getElementById("error-window").innerHTML = '<span class="text-danger">Hasła nie są takie same!</span>';
+    }
+}
+document.getElementById("Password").addEventListener('change', validatePasswords);
+document.getElementById("RePassword").addEventListener('change', validatePasswords);
 </script>
 
 </html>

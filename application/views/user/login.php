@@ -48,13 +48,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         transition: 0.4s;
         border-radius: 50px;
     }
+    .back {
+        text-align: left;
+    }
     </style>
 </head>
 
 <body>
     <div class="bg">
         <div class="center-screen">
-            <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
+            <div class="col-xs-12 col-md-6 col-lg-4 bg-light p-4 rounded">
+                <div class="back">
+                    <a href="javascript:history.back()"><i class="bi bi-chevron-left"></i> Powrót</a>
+                </div>
+                
                 <h2>Logowanie</h2>
                 <p>PKP Online</p>
                 <hr>
