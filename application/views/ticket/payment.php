@@ -88,57 +88,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </header>
     <div class="bg">
         <div class="center-screen">
-            <div class="col-xs-12 col-md-6 bg-light p-4 rounded">
-                <h2>Moje bilety</h2>
+            <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
+                <h2>Opłać bilet</h2>
                 <p>PKP Online</p>
                 <hr>
-                <p>Historia zakupionych biletów</p>
-                <table>
-                        <tr>
-                            <td>ID biletu	</td>
-                            <td>ID user	</td>
-                            <td>ID polaczenia	</td>
-                            <td>ID pociagu </td>
-                            <td>miejsce	</td>
-                            <td>przedzial</td>
-                            <td>active</td>
-                            <td>data zakupu</td>
-                            <td>start</td>
-                            <td>end</td>
-                            <td>payment</td>
-                        </tr>
-                        <?php foreach($records as $row){?>
-                            
-                        <tr>
-                            <td><?php echo $row->ticket_id; ?></td>
-                            <td><?php echo $row->user_id; ?></td>
-                            <td><?php echo $row->connection_id; ?></td>
-                            <td><?php echo $row->train_id; ?></td>
-                            <td><?php echo $row->position; ?></td>
-                            <td><?php echo $row->compartment; ?></td>
-                            <td><?php echo $row->active; ?></td>
-                            <td><?php echo $row->buytime; ?></td>
-                            <td><?php echo $row->start; ?></td>
-                            <td><?php echo $row->end; ?></td>
-                            <td><?php echo $row->payment; ?></td>
-                            <td>
-                                <a href="<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>" class="btn btn-danger">Anuluj</a>
-                            </td>
-                            <td>
-                                <?php if ($row->payment == 0) { ?>
-                                <a href="<?php echo base_url().'ticket/pay/'.$row->ticket_id?>" class="btn btn-primary">Opłać</a>
-                                <?php } ?>
-                            </td>
-                        </tr>
-                        
-                        <?php }?>
-                    </table>
+                <form action="<?= base_url() ?>ticket/mytickets" method="post"> 
+                    <input type="hidden" name="payment" class="form-control formVal" value="1">
+                    <div class="mb-3">
+                        <p>Płatność</p>
+                        <div class="mb-3">
+                            <label for="blikCode" class="form-label">Wpisz kod BLIK</label>
+                            <input name="blikCode" class="form-control formVal" id="blikCode" required type="text" pattern="\d*" maxlength="6">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitbtn">Potwierdź</button>
+                </form>
             </div>
         </div>
     </div>
 </body>
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
-<script>
 
 </html>

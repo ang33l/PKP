@@ -103,7 +103,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <label for="ChooseSeats" class="form-label">Wybierz miejsca</label>
                         <input name="seats" type="number" class="form-control formVal" id="ChooseSeats" required min="0">
                     </div>
-
+                    <hr>
+                    <p>Płatność</p>
+                    <div class="form-check">
+                            <input name="payment" type="radio" class="form-check-input" id="ChoosePayment1" value="later" required>
+                            <label class="form-check-label" for="ChoosePayment1">Zapłać później</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="payment" type="radio" class="form-check-input"  id="ChoosePayment2" value="blik" required>
+                            <label class="form-check-label" for="ChoosePayment2">BLIK</label>
+                        </div> </br>
                     <button type="submit" class="btn btn-primary" id="submitbtn">Kup bilet</button>
                 </form>
             </div>

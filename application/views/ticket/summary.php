@@ -89,7 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
-                <h2>Kup bilet</h2>
+                <h2>Podsumowanie</h2>
                 <p>PKP Online</p>
                 <hr>
                 <form action="<?= site_url() ?>/ticket/addToBase" method="post"> 
@@ -102,20 +102,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <input type="hidden" name="seats" class="form-control formVal" value="<?php echo $_POST['seats']  ?>">
                     </div>
                     <hr>
+                    <?php
+                    if ($_POST['payment'] == 'blik') { 
+                    ?>
+                    <!-- <input type="hidden" name="numSeats" class="form-control formVal" value="<?php echo $_POST['payment']  ?>"> -->
+                    <input type="hidden" name="payment" class="form-control formVal" value="1">
                     <div class="mb-3">
-                        
-                        <p>Wybierz płatność</p>
-                        <div class="form-check">
-                            <input name="payment" type="radio" class="form-check-input" id="ChoosePayment1"  required>
-                            <label class="form-check-label" for="ChoosePayment1">Zapłać później</label>
-                            </div>
-                        <div class="form-check">
-                            <input name="payment" type="radio" class="form-check-input"  id="ChoosePayment2" required>
-                            <label class="form-check-label" for="ChoosePayment2">BLIK</label>
+                        <p>Płatność</p>
+                        <div class="mb-3">
+                            <label for="blikCode" class="form-label">Wpisz kod BLIK</label>
+                            <input name="blikCode" class="form-control formVal" id="blikCode" required type="text" pattern="\d*" maxlength="6">
                         </div>
-                        
                     </div>
-
+                    <?php } else { ?> <input type="hidden" name="payment" class="form-control formVal" value="0"> <?php } ?>
                     <button type="submit" class="btn btn-primary" id="submitbtn">Potwierdź</button>
                 </form>
             </div>
