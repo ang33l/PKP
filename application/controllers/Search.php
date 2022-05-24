@@ -5,11 +5,17 @@ class Search extends CI_Controller {
 
 	public function index()
 	{
+        $header['page_title'] = "Wyszukiwanie połączeń"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "search"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
         $this->load->view('/search/search');
 	}
 
     function keyword()
     {
+        $header['page_title'] = "Wyszukiwanie połączeń"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "search"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
         $this->load->model('Search_model');
 
         $from=$this->input->post('from-where');

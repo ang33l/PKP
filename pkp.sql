@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Czas generowania: 21 Maj 2022, 19:22
--- Wersja serwera: 10.4.24-MariaDB
--- Wersja PHP: 8.1.5
+-- Host: 127.0.0.1
+-- Czas generowania: 24 Maj 2022, 15:28
+-- Wersja serwera: 10.4.22-MariaDB
+-- Wersja PHP: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -159,6 +159,15 @@ CREATE TABLE `tickets` (
   `payment` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `tickets`
+--
+
+INSERT INTO `tickets` (`ticket_id`, `user_id`, `connection_id`, `train_id`, `position`, `compartment`, `active`, `buytime`, `start`, `end`, `payment`) VALUES
+(1, 1, 1, 1, 4, 1, 0, '2022-05-24 13:27:23', 1, 1, 1),
+(2, 1, 1, 1, 3, 1, 0, '2022-05-24 13:27:33', 1, 1, 1),
+(3, 1, 1, 1, 6, 1, 1, '2022-05-24 13:27:43', 1, 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -285,6 +294,7 @@ ALTER TABLE `connections_stops`
 -- Indeksy dla tabeli `tickets`
 --
 ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`ticket_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `connection_id` (`connection_id`),
   ADD KEY `train_id` (`train_id`),
@@ -351,6 +361,12 @@ ALTER TABLE `connections`
 --
 ALTER TABLE `connections_stops`
   MODIFY `stops_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT dla tabeli `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `ticket_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `train`

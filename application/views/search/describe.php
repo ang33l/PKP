@@ -1,18 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PKP Online :: Wyszukiwanie połączeń</title>
-    <link href="<?= base_url() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= base_url() ?>assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet">
-
     <style>
     body,
     html {
@@ -49,34 +37,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         transition: 0.4s;
         border-radius: 50px;
     }
-    .btn-buy{
+
+    .btn-buy {
         background: green;
     }
+    td{
+        vertical-align: middle;
+    }
     </style>
-</head>
-
-<body>
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
                 <h2>Dostępne połączenia</h2>
                 <p>PKP Online</p>
-                    <table class="table">
-                        <tr>
-                            <th>Skąd</th>
-                            <th>Dokąd</th>
-                            <th>Czas odjazdu</th>
-                            <th>Czas przyjazdu</th>
-                        </tr>
-                        <?php foreach($records as $row){?>
-                        <tr>
-                            <td><?= $row['from'] ?></td>
-                            <td><?= $row['to'] ?></td>
-                            <td><?= $row['date_from'] ?></td>
-                            <td><?= $row['date_to'] ?></td>
-                        </tr>
-                        <?php }?>
-                    </table>
+                <table class="table">
+                    <tr>
+                        <th>Skąd</th>
+                        <th>Dokąd</th>
+                        <th>Czas odjazdu</th>
+                        <th>Czas przyjazdu</th>
+                        <th>Akcje</th>
+                    </tr>
+                    <?php foreach($records as $row){?>
+                    <tr>
+                        <td><?= $row['from'] ?></td>
+                        <td><?= $row['to'] ?></td>
+                        <td><?= $row['date_from'] ?></td>
+                        <td><?= $row['date_to'] ?></td>
+                        <td><a href="<?php echo base_url().'ticket/buy/'?>" class="btn btn-primary">Kup</a></td>
+                    </tr>
+                    <?php }?>
+                </table>
             </div>
         </div>
     </div>

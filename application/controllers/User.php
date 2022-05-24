@@ -93,26 +93,6 @@ class User extends CI_Controller {
 
         $response = $user->register();
         return $response;
-        /*
-        if(verifyPostFromRegister()){
-            if($this->input->post('pass') == $this->input->post('repass')){
-                $sql = 'INSERT INTO user (user_id, user_name, password) VALUES (DEFAULT, ?, ?);';
-                $query = $this->db->query($sql, array(
-                    $this->input->post('login'),
-                    password_hash($this->input->post('pass'), PASSWORD_BCRYPT)
-                ));
-                echo "1";
-                die();
-            }
-            else {
-                echo "0";
-                die();
-            }
-        }else{
-            echo "0";
-            die();
-        }*/
-        
     }
     public function logout()
     {

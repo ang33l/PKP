@@ -20,7 +20,6 @@ class Search_Model extends CI_Model {
             }
         }
 
-        $result=array('query' =>$query->result(), 'sql2' => $sql2->result());
         return $arr;
     }
 }
