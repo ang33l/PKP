@@ -73,6 +73,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url() ?>ticket/myTickets">Historia biletów</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url() ?>user/settings">Edytuj trasy</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="<?= base_url() ?>user/settings">Ustawienia</a>
                 </li>
             </ul>

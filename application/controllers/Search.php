@@ -16,7 +16,7 @@ class Search extends CI_Controller {
         $to=$this->input->post('to-where');
         $date=$this->input->post('depature-time');
 
-        $data['records'] = $this->Search_model->search($from, $to,$date);
+        $data['records'] = $this->Search_model->search($from,$to,$date);
         $this->load->view('/search/describe',$data);
     }
 }
