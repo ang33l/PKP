@@ -24,24 +24,25 @@ class Ticket extends CI_Controller {
     }
     public function addToBase()
     {
+        $payment=$this->input->post('payment');
         $numSeats=$this->input->post('numSeats');
-        $seats=$this->input->post('seats');
         $user_id = $this->session->user_id;
-		$response=$this->Ticket_model->saverecords($numSeats, $seats, $user_id); 
-		if($response==true) {
+        $seats=$this->input->post('seats');
+
+        $response=$this->Ticket_model->saverecords($seats, $user_id, $payment); 
+        if($response==true) {
             ?>
-            
+                
             <script type="text/javascript">
                     alert("Zakup zrealizowany!");
-                    
+                        
                 </script>
             <?php
-			//echo "Records Saved Successfully";
-		}
-		else{
-			echo "Insert error !";
-		}
-         
+            //echo "Records Saved Successfully";
+        } else {
+            echo "Insert error !";
+        }
+        
         header("Location: ".base_url()."ticket/mytickets");
     }
     public function myTickets()
@@ -55,6 +56,10 @@ class Ticket extends CI_Controller {
     {
         $this->Ticket_model->cancelTicket($ticketId);
         redirect(base_url().'ticket/mytickets');
-
+    }
+    public function pay($ticketId)
+    {
+        $this->load->view('/ticket/payment');
+        $this->Ticket_model->payTicket($ticketId);
     }
 }

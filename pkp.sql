@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Czas generowania: 20 Maj 2022, 13:39
--- Wersja serwera: 10.4.22-MariaDB
--- Wersja PHP: 8.1.2
+-- Host: localhost:3307
+-- Czas generowania: 21 Maj 2022, 19:22
+-- Wersja serwera: 10.4.24-MariaDB
+-- Wersja PHP: 8.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -155,7 +155,8 @@ CREATE TABLE `tickets` (
   `active` tinyint(1) DEFAULT NULL,
   `buytime` timestamp NULL DEFAULT NULL,
   `start` int(11) NOT NULL,
-  `end` int(11) NOT NULL
+  `end` int(11) NOT NULL,
+  `payment` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -367,7 +368,7 @@ ALTER TABLE `train_carriage`
 -- AUTO_INCREMENT dla tabeli `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT dla tabeli `user_type`
