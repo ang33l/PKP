@@ -47,12 +47,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <hr>
                 <form action="<?= site_url() ?>/ticket/addToBase" method="post"> 
                     <div class="mb-3">
-                        <p>Trasa [skąd] - [dokąd]</p>
-                        <p>Odjazd [hh-mm], przyjazd [hh-mm]</p>
+                        <p>Trasa <?php echo $this->session->from?> - <?php echo $this->session->to?> </p>
+                        <p>Odjazd: <?php echo $this->session->date_from?> </p>
+                        <p>Przyjazd: <?php echo $this->session->date_to?> </p>
                         <p>Ilość biletów: <?php echo $_POST['numSeats']  ?></p>
-                        <p>Wybrane miejsce: <?php echo $_POST['seats']  ?></p>
+                        <!-- <p>Wybrane miejsce: <?php echo $_POST['seats']  ?></p> -->
                         <input type="hidden" name="numSeats" class="form-control formVal" value="<?php echo $_POST['numSeats']  ?>">
-                        <input type="hidden" name="seats" class="form-control formVal" value="<?php echo $_POST['seats']  ?>">
+                        <!-- <input type="hidden" name="connection" class="form-control formVal" value="<?php echo $this->session->id_connection  ?>"> -->
+                        <!-- <input type="hidden" name="seats" class="form-control formVal" value="<?php echo $_POST['seats']  ?>"> -->
                     </div>
                     <hr>
                     <?php

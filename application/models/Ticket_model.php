@@ -9,20 +9,26 @@ class Ticket_model extends CI_Model {
     public $departure_date;
     //??? public skąd/dokąd
     //public $user_id;
-    public function saverecords($seats, $user_id, $payment)
+    public function saverecords($numSeats, $user_id, $id_connection, $payment, $from, $where)
     {
+
+        // $start=$this->db->query("SELECT stops_id FROM connections_stops WHERE town = '.$from.'");
+        // $end=$this->db->query("SELECT stops_id FROM connections_stops WHERE town = '.$where.'");
         // $this->db->query("INSERT INTO tickets (ticket_id, user_id, train_id, position, active, buytime, start, end) VALUES (DEFAULT, $user_id, 1, $seats, 1, CURRENT_TIMESTAMP, 1, 1) ");
-        $this->db->query("INSERT INTO tickets VALUES (DEFAULT, $user_id, 1, 1, $seats, 1, 1, CURRENT_TIMESTAMP, 1, 1, $payment) ");
+        $this->db->query("INSERT INTO tickets VALUES (DEFAULT, $user_id, $id_connection, 1, $numSeats, 1, 1, CURRENT_TIMESTAMP, 1, 1, $payment) ");
+        $this->db->query("UPDATE connection_details  SET quantity_seats = quantity_seats - $numSeats WHERE id_connection_details = 1");
         return true;
     }
     public function show($user_id)
     {
-        $query=$this->db->query("SELECT `ticket_id`, `user_id`, `connection_id`, `train_id`, `position`, `compartment`, `active`, `buytime`, `start`, `end`, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id");
+        // $query=$this->db->query("SELECT `ticket_id`, `user_id`, `connection_id`, `train_id`, `position`, `compartment`, `active`, `buytime`, `start`, `end`, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id");
+        $query=$this->db->query("SELECT `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, `start`, `end`, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id");
         return $query->result();
     }
-    public function cancelTicket($idTicket)
+    public function cancelTicket($idTicket, $numSeats)
     {
         $query=$this->db->query("UPDATE tickets SET active = 0 WHERE ticket_id = $idTicket");
+        $this->db->query("UPDATE connection_details SET quantity_seats = quantity_seats + $numSeats WHERE id_connection_details = 1");
     }
     public function payTicket($idTicket)
     {

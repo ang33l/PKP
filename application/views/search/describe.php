@@ -45,6 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         vertical-align: middle;
     }
     </style>
+
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
@@ -64,7 +65,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <td><?= $row['to'] ?></td>
                         <td><?= $row['date_from'] ?></td>
                         <td><?= $row['date_to'] ?></td>
-                        <td><a href="<?php echo base_url().'ticket/buy/'?>" class="btn btn-primary">Kup</a></td>
+                        <?php
+                        $_SESSION['from'] = $row['from'];
+                        $_SESSION['to'] = $row['to'];
+                        $_SESSION['date_from'] = $row['date_from'];
+                        $_SESSION['date_to'] = $row['date_to'];
+                        $_SESSION['connection_id'] = $row['connection_id'];
+
+                        ?>
+                        <td><a href="<?php echo base_url().'pkp/ticket/buy/'?>" class="btn btn-primary">Kup</a></td>
                     </tr>
                     <?php }?>
                 </table>

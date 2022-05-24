@@ -36,9 +36,12 @@ class Ticket extends CI_Controller {
         $payment=$this->input->post('payment');
         $numSeats=$this->input->post('numSeats');
         $user_id = $this->session->user_id;
-        $seats=$this->input->post('seats');
+        $id_connection = $this->session->connection_id;
+        $from = $this->session->from;
+        $where = $this->session->where;
+        // $seats=$this->input->post('seats');
 
-        $response=$this->Ticket_model->saverecords($seats, $user_id, $payment); 
+        $response=$this->Ticket_model->saverecords($numSeats, $user_id, $id_connection, $payment, $from, $where); 
         if($response==true) {
             ?>
                 
@@ -66,7 +69,8 @@ class Ticket extends CI_Controller {
 
     public function cancel($ticketId)
     {
-        $this->Ticket_model->cancelTicket($ticketId);
+        $numSeats = $this->session->position;
+        $this->Ticket_model->cancelTicket($ticketId, $numSeats);
         redirect(base_url().'ticket/mytickets');
     }
     public function pay($ticketId)

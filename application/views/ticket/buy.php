@@ -46,16 +46,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <h2>Kup bilet</h2>
                 <p>PKP Online</p>
                 <hr>
-                <p>Kupno biletu na trasie [skąd] - [dokąd]</p>
+
+                <p>Kupno biletu na trasie: <?php echo $this->session->from?> - <?php echo $this->session->to?> </p>
+                <p>Czas odjazdu: <?php echo $this->session->date_from?> </p>
+                <p>Czas przyjazdu: <?php echo $this->session->date_to?> </p>
+                
                 <form action="<?= site_url() ?>ticket/confirmation" method="post"> 
                     <div class="mb-3">
                         <label for="NumberOfSeats" class="form-label">Ilość miejsc</label>
                         <input name="numSeats" type="number" class="form-control formVal" id="NumberOfSeats" required min="0">
                     </div>
+                    <!--  
                     <div class="mb-3">
                         <label for="ChooseSeats" class="form-label">Wybierz miejsca</label>
                         <input name="seats" type="number" class="form-control formVal" id="ChooseSeats" required min="0">
                     </div>
+                    -->
                     <hr>
                     <p>Płatność</p>
                     <div class="form-check">
