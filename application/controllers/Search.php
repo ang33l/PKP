@@ -5,7 +5,7 @@ class Search extends CI_Controller {
 
 	public function index()
 	{
-        $this->load->view('/home/search');
+        $this->load->view('/search/search');
 	}
 
     function keyword()
@@ -16,7 +16,7 @@ class Search extends CI_Controller {
         $to=$this->input->post('to-where');
         $date=$this->input->post('depature-time');
 
-        $data['records'] = $this->Search_model->search($from, $to);
-        $this->load->view('/home/describe',$data);
+        $data['records'] = $this->Search_model->search($from, $to,$date);
+        $this->load->view('/search/describe',$data);
     }
 }

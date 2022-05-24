@@ -1,26 +1,26 @@
 <?php
 
 class Search_Model extends CI_Model {
-    public function search($from, $to)
-    {/*
-        if($this->input->post('from-where') && $this->input->post('to-where')){
-            $sql =  'SELECT from_where, to_where FROM connections 
-            WHERE from_where=? AND to_where=?;';
-            $query = $this->db->query($sql, array(
-                $this->input->post('from-where'),
-                $this->input->post('to-where')  
-            ));  
+    public function search($from, $to, $date)
+    {
+        $query=$this->db->query("SELECT town, date, connection_id FROM connections_stops WHERE town='$from' AND date>'$date';");
+    
+        $arr = array();
+        foreach($query->result() as $row )
+        {
+            $sql2=$this->db->query("SELECT town, date, connection_id FROM connections_stops WHERE town='$to' AND connection_id='$row->connection_id';");
+            foreach($sql2->result() as $r){
+                array_push($arr, array(
+                    'from' => $row->town,
+                    'to' => $r->town,
+                    'connection_id' => $r->connection_id,
+                    'date_from' => $row->date,
+                    'date_to' => $r->date,
+                ));
+            }
         }
 
-
-        */
-        //$this->db->like('from_where', $key);
-        //$query = $this ->db->get('connections');
-        $from_date=$this->input->post('depature-time');
-        $query=$this->db->query("SELECT from_where, to_where, arrive_time, depature_time, 
-         hour_of_arrive, hour_of_depature FROM connections WHERE from_where='$from' AND to_where='$to'");
-        return $query->result();
-        
+        $result=array('query' =>$query->result(), 'sql2' => $sql2->result());
+        return $arr;
     }
-
 }

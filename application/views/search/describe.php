@@ -61,25 +61,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
                 <h2>Dostępne połączenia</h2>
                 <p>PKP Online</p>
-                    <table>
+                    <table class="table">
                         <tr>
-                            <td>Skąd</td>
-                            <td>Dokąd</td>
-                            <td>Data wyjazdu</td>
-                            <td>Data przyjazdu</td>
-                            <td>Godzina odjazdu</td>
-                            <td>Godzina przyjazdu</td>
+                            <th>Skąd</th>
+                            <th>Dokąd</th>
+                            <th>Czas odjazdu</th>
+                            <th>Czas przyjazdu</th>
                         </tr>
                         <?php foreach($records as $row){?>
                         <tr>
-                            <td><?php echo $row->from_where; ?></td>
-                            <td><?php echo $row->to_where; ?></td>
-                            <td><?php echo $row->depature_time; ?></td>
-                            <td><?php echo $row->arrive_time; ?></td>
-                            <td><?php echo $row->hour_of_depature; ?></td>
-                            <td><?php echo $row->hour_of_arrive; ?></td>
+                            <td><?= $row['from'] ?></td>
+                            <td><?= $row['to'] ?></td>
+                            <td><?= $row['date_from'] ?></td>
+                            <td><?= $row['date_to'] ?></td>
                         </tr>
-                        
                         <?php }?>
                     </table>
             </div>

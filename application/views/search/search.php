@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?= base_url() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?= base_url() ?>assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <style>
     body,
@@ -66,11 +67,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Dokąd</label>
-                        <input name="to-where" type="text" class="form-control" required>
+                        <input name="to-where" type="text" class="form-control" >
                     </div>
                     <div class="mb-3" class="form-label">
                         <label for="">Wybierz datę</label>
-                        <input name="depature-time" type="date" class="form-control"/>
+                        <input name="depature-time" id="pick_date" type="datetime-local" class="form-control"/>
                     </div>
 
                     <button type="submit" class="btn btn-primary" id="submitbtn">Wyszukaj połączenia</button>
@@ -82,6 +83,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    conf={
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true,
+        //minDate: "today"
+    }
+
+    flatpickr("#pick_date", conf);
+</script>
 
 
 </html>
