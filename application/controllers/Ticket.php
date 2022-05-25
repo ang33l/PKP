@@ -10,16 +10,25 @@ class Ticket extends CI_Controller {
     }
 	public function buy()
 	{
+        $header['page_title'] = "Kupno biletu"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
         $this->load->view('ticket/buy');
 	}
 
     public function summary()
     {
+        $header['page_title'] = "Kupno biletu"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
         $this->load->view('ticket/summary');
     }
 
     public function confirmation()
     {
+        $header['page_title'] = "Kupno biletu"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
         $this->load->view('/ticket/summary');
     }
     public function addToBase()
@@ -47,6 +56,9 @@ class Ticket extends CI_Controller {
     }
     public function myTickets()
     {
+        $header['page_title'] = "Moje bilety"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
         $user_id = $this->session->user_id;
         $data['records'] = $this->Ticket_model->show($user_id);
         $this->load->view('/ticket/mytickets',$data);
@@ -59,6 +71,9 @@ class Ticket extends CI_Controller {
     }
     public function pay($ticketId)
     {
+        $header['page_title'] = "Kupno biletu"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
         $this->load->view('/ticket/payment');
         $this->Ticket_model->payTicket($ticketId);
     }

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
     body,
     html {
@@ -38,29 +38,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         transition: 0.4s;
         border-radius: 50px;
     }
+    td{
+        vertical-align: middle;
+    }
     </style>
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
-                <h2>Opłać bilet</h2>
+                <h2>Edytuj połączenie</h2>
                 <p>PKP Online</p>
                 <hr>
-                <form action="<?= base_url() ?>ticket/mytickets" method="post"> 
-                    <input type="hidden" name="payment" class="form-control formVal" value="1">
+                
+                <form action="<?php echo site_url('search/update/'.array_column($records, 'stops_id')[0]); ?>" method="post">
+                <?php foreach($records as $r){?>
                     <div class="mb-3">
-                        <p>Płatność</p>
-                        <div class="mb-3">
-                            <label for="blikCode" class="form-label">Wpisz kod BLIK</label>
-                            <input name="blikCode" class="form-control formVal" id="blikCode" required type="text" pattern="\d*" maxlength="6">
-                        </div>
+                        <label for="" class="form-label">Skąd</label>
+                        <input name="from-where" type="text" value="<?= $r->town?>" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="submitbtn">Potwierdź</button>
+                    <div class="mb-3" class="form-label">
+                        <label for="">Wybierz datę</label>
+                        <input name="depature-time" id="pick_date" value="<?= $r->date?>" type="datetime" class="form-control" />
+                    </div>
+
+                    <button type="submit" class="btn btn-success" id="submitbtn">Update</button>
+                <?php }?>
                 </form>
+                
             </div>
         </div>
     </div>
 </body>
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+conf = {
+    //altInput: true,
+    enableTime: true,
+    dateFormat: "Y-m-d H:i:S",
+    time_24hr: true,
+    enableSeconds: true
+    //minDate: "today"
+}
+
+flatpickr("#pick_date", conf);
+</script>
 
 </html>
