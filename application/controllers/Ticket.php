@@ -69,8 +69,7 @@ class Ticket extends CI_Controller {
 
     public function cancel($ticketId)
     {
-        $numSeats = $this->session->position;
-        $this->Ticket_model->cancelTicket($ticketId, $numSeats);
+        $this->Ticket_model->cancelTicket($ticketId);
         redirect(base_url().'ticket/mytickets');
     }
     public function pay($ticketId)
