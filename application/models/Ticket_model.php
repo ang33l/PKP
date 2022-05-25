@@ -32,6 +32,12 @@ class Ticket_model extends CI_Model {
     {
         $query=$this->db->query("UPDATE tickets SET payment = 1 WHERE ticket_id = $idTicket");
     }
+
+    public function showAll()
+    {
+        $query=$this->db->query("SELECT t.ticket_id, t.user_id, t.connection_id, t.position, t.active, t.buytime, t.start, t.end, t.payment FROM tickets t INNER JOIN user ON t.user_id=user.user_id INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.name = 'head_admin' AND active=1 ");
+        return $query->result();
+    }
 }
 
 
