@@ -53,7 +53,7 @@ html {
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Dokąd</label>
-                        <input name="to-where" type="text" class="form-control">
+                        <input name="to-where" type="text" class="form-control" required>
                     </div>
                     <div class="mb-3" class="form-label">
                         <label for="">Wybierz datę</label>
