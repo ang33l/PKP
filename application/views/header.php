@@ -27,6 +27,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <li><a class="nav-link <?= $nav_item == "search" ? "active":"" ?>" href="<?= base_url() ?>search">Wyszukaj połączenie kolejowe</a></li>
                     <li><a class="nav-link <?= $nav_item == "ticket" ? "active":"" ?>" href="<?= base_url() ?>ticket/buy">Kup bilet</a></li>
                     <li><a class="nav-link" href="<?= base_url() ?>#contact">Kontakt</a></li>
+                    <?php if($this->session->user_type_id == 1 || $this->session->user_type_id == 2){
+                        echo '<li><a class="nav-link ';
+                        echo $nav_item == "admin" ? "active":"";
+                        echo '" href="'. base_url() .'admin">Panel admina</a></li>';
+                    }
+                    ?>
                     <li class="dropdown"><a href="#" class="<?= $nav_item == "account" ? "active":"" ?>"><span>Strefa pasażera</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             <?php

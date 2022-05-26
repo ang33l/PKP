@@ -15,6 +15,9 @@ class User extends CI_Controller {
 
     public function account()
     {
+        $header['page_title'] = "Konto"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "account"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
         $this->load->model('User_model');
         $user = $this->User_model;
         $user->user_id = $this->session->user_id;
@@ -53,6 +56,7 @@ class User extends CI_Controller {
                 $this->session->set_userdata(array(
                     'loggedIn' => true,
                     'user_id' => $row->user_id,
+                    'user_type_id' => $row->user_type_id
                 ));
                 return $this->output->set_content_type('application/json', 'utf-8')
                     ->set_status_header(200)

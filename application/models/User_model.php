@@ -11,7 +11,7 @@ class User_model extends CI_Model {
 
     public function login()
     {
-        $sql =  'SELECT user_id, user_name, password FROM user WHERE user_name=?;';
+        $sql =  'SELECT user_id, user_name, password, user_type_id FROM user WHERE user_name=?;';
         $query = $this->db->query($sql, array($this->login));
         return $query;
     }
@@ -54,13 +54,27 @@ class User_model extends CI_Model {
 
     public function get_user_data()
     {
-        $sql = 'SELECT email, first_name, last_name, user_name, ut.name FROM user  INNER JOIN user_type ut WHERE user_id=?;';
+        $sql = 'SELECT email, first_name, last_name, user_name, ut.name FROM user u LEFT JOIN user_type ut ON u.user_type_id=ut.user_type_id WHERE user_id=?;';
         $query = $this->db->query($sql, array($this->session->user_id));
         return $query;
     }
 
+    public function find_user($login)
+    {
+        $sql = 'SELECT user_id, email, user_name, ut.name, ut.user_type_id FROM user u LEFT JOIN user_type ut ON u.user_type_id=ut.user_type_id WHERE user_name=? OR email=?;';
+        $query = $this->db->query($sql, array($login, $login));
+
+        return $query;
+    }  
+
+    public function change_user_privilage($type, $user_id)
+    {
+        $sql = 'UPDATE user SET user_type_id=? WHERE user_id=?';
+        return $this->db->query($sql, array($type, $user_id));
+    }
+
     public function change_password(){}
-    public function change_user_privilage(){}
+    
     public function delete_user(){}
     
 }
