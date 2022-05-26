@@ -38,12 +38,14 @@ class User_model extends CI_Model {
                 )));
         }
 
-        $sql = 'INSERT INTO user (user_id, user_name, password, email, user_type_id) VALUES (DEFAULT, ?, ?, ?, ?);';
+        $sql = 'INSERT INTO user (user_id, user_name, password, email, user_type_id, first_name, last_name) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?);';
         $query = $this->db->query($sql, array(
             $this->login,
             password_hash($this->pass, PASSWORD_BCRYPT),
             $this->email,
-            3
+            3,
+            $this->first_name,
+            $this->last_name
         ));
         return $this->output->set_content_type('application/json', 'utf-8')
                 ->set_status_header(200)
