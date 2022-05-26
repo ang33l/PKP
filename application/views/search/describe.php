@@ -73,7 +73,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         $_SESSION['connection_id'] = $row['connection_id'];
 
                         ?>
-                        <td><a href="<?php echo base_url().'ticket/buy/'?>" class="btn btn-primary">Kup</a></td>
+                        <td><a href="<?php echo base_url().'ticket/buy'?>" class="btn btn-primary">Kup</a></td>
                     </tr>
                     <?php }?>
                 </table>

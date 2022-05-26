@@ -46,7 +46,7 @@ html {
                 <h2>Wyszukiwanie połączeń</h2>
                 <p>PKP Online</p>
                 <hr>
-                <form action="<?php echo site_url('search/keyword'); ?>" method="post">
+                <form action="<?php echo base_url().'search/keyword'; ?>" method="post">
                     <div class="mb-3">
                         <label for="" class="form-label">Skąd</label>
                         <input name="from-where" type="text" class="form-control" required>
