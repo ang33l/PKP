@@ -69,8 +69,7 @@ class Ticket extends CI_Controller {
 
     public function cancel($ticketId)
     {
-        $numSeats = $this->session->position;
-        $this->Ticket_model->cancelTicket($ticketId, $numSeats);
+        $this->Ticket_model->cancelTicket($ticketId);
         redirect(base_url().'ticket/mytickets');
     }
     public function pay($ticketId)
@@ -80,5 +79,14 @@ class Ticket extends CI_Controller {
 		$this->load->view('header', $header);
         $this->load->view('/ticket/payment');
         $this->Ticket_model->payTicket($ticketId);
+    }
+
+    public function showAllTickets()
+    {
+        $header['page_title'] = "Wszystkie bilety bilety"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+        $data['records'] = $this->Ticket_model->showAll();
+        $this->load->view('/ticket/showalltickets',$data);
     }
 }
