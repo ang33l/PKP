@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     .center-screen input {
         border-radius: 0;
     }
-
+    /*
     .center-screen button {
         background: #1977cc;
         border: 0;
@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         background-color: #1977cc;
         transition: 0.4s;
         border-radius: 50px;
-    }
+    } */
     td{
         vertical-align: middle;
     }
@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <?php
                                     $_SESSION['position'] = $row->position;
                                 ?>
-                                <a href="<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>" class="btn btn-danger">Anuluj</a>
+                                <button class="btn btn-danger" onclick="confirmAction()">Anuluj</button>
                             </td>
                             <td>
                                 <?php if ($row->payment == 0) { ?>
@@ -100,5 +100,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
 <script>
+      function confirmAction() {
+        let confirmAction = confirm("Czy na pewno chcesz anulować ten bilet?");
+        if (confirmAction) {
+            window.location.href = "<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>";
+
+        } else {
+            alert("Anulowanie biletu zostało przerwane");
+        }
+      }
+</script>
 
 </html>
