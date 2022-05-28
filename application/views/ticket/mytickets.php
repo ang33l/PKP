@@ -43,18 +43,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </style>
     <div class="bg">
         <div class="center-screen">
-            <div class="col-xs-12 col-md-6 bg-light p-4 rounded">
+            <div class="col-xs-12 col-md-7 bg-light p-4 rounded">
                 <h2>Moje bilety</h2>
                 <p>PKP Online</p>
                 <hr>
                 <p>Historia zakupionych biletów</p>
                 <table class="table">
                         <tr>
+                            <td>Ilość	</td>
                             <td>ID biletu	</td>
                             <td>ID user	</td>
                             <td>ID polaczenia	</td>
                             <!-- <td>ID pociagu </td> -->
-                            <td>miejsca	</td>
+                            <td>miejsce	</td>
                             <!-- <td>przedzial</td> -->
                             <td>active</td>
                             <td>data zakupu</td>
@@ -67,6 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?php foreach($records as $row){?>
                             
                         <tr>
+                            <td><?php echo $row->ilosc; ?></td>
                             <td><?php echo $row->ticket_id; ?></td>
                             <td><?php echo $row->user_id; ?></td>
                             <td><?php echo $row->connection_id; ?></td>
@@ -78,11 +80,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <!-- <td><?php echo $row->start; ?></td> -->
                             <!-- <td><?php echo $row->end; ?></td> -->
                             <td><?php echo $row->payment; ?></td>
+                            
                             <td>
-                                <?php
-                                    $_SESSION['position'] = $row->position;
-                                ?>
-                                <button class="btn btn-danger" onclick="confirmAction()">Anuluj</button>
+                            <a href="<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>" onclick="javascript:return confirm('Czy na pewno chcesz anulować wszystkie bilety?')" class="btn btn-danger">Anuluj</a> 
                             </td>
                             <td>
                                 <?php if ($row->payment == 0) { ?>
@@ -99,16 +99,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </body>
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
-<script>
-      function confirmAction() {
-        let confirmAction = confirm("Czy na pewno chcesz anulować ten bilet?");
-        if (confirmAction) {
-            window.location.href = "<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>";
-
-        } else {
-            alert("Anulowanie biletu zostało przerwane");
-        }
-      }
-</script>
 
 </html>
