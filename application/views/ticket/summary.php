@@ -55,22 +55,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <input type="hidden" name="numSeats" class="form-control formVal" value="<?php echo $_POST['numSeats']  ?>">
                         <!-- <input type="hidden" name="connection" class="form-control formVal" value="<?php echo $this->session->id_connection  ?>"> -->
                         <!-- <input type="hidden" name="seats" class="form-control formVal" value="<?php echo $_POST['seats']  ?>"> -->
+                        
+                            
+                         
                     </div>
                     <hr>
-                    <?php
-                    if ($_POST['payment'] == 'blik') { 
-                    ?>
-                    <!-- <input type="hidden" name="numSeats" class="form-control formVal" value="<?php echo $_POST['payment']  ?>"> -->
-                    <input type="hidden" name="payment" class="form-control formVal" value="1">
-                    <div class="mb-3">
-                        <p>Płatność</p>
+                    <?php if($records->wolne >= $_POST['numSeats']) { ?>
+                                
+                        <?php
+                        if ($_POST['payment'] == 'blik') { 
+                        ?>
+                        <!-- <input type="hidden" name="numSeats" class="form-control formVal" value="<?php echo $_POST['payment']  ?>"> -->
+                        <input type="hidden" name="payment" class="form-control formVal" value="1">
                         <div class="mb-3">
-                            <label for="blikCode" class="form-label">Wpisz kod BLIK</label>
-                            <input name="blikCode" class="form-control formVal" id="blikCode" required type="text" pattern="\d*" maxlength="6">
+                            <p>Płatność</p>
+                            
+                            <div class="mb-3">
+                                <label for="blikCode" class="form-label">Wpisz kod BLIK</label>
+                                <input name="blikCode" class="form-control formVal" id="blikCode" required type="text" pattern="\d*" maxlength="6">
+                            </div>
                         </div>
-                    </div>
-                    <?php } else { ?> <input type="hidden" name="payment" class="form-control formVal" value="0"> <?php } ?>
-                    <button type="submit" class="btn btn-primary" id="submitbtn">Potwierdź</button>
+                        <?php } else { ?> <input type="hidden" name="payment" class="form-control formVal" value="0"> <?php } ?>
+                        <button type="submit" class="btn btn-primary" id="submitbtn">Potwierdź</button>
+
+                        <?php } else { ?>
+                        <h5>Brak wystarczającej liczby dostępnych biletów na tę trasę. </h5> 
+                            <div class="back">
+                                <a href="javascript:history.back()"><i class="bi bi-chevron-left"></i> Powrót</a>
+                            </div>
+                        <?php } ?>
+                                
+                              
                 </form>
             </div>
         </div>

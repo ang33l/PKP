@@ -40,17 +40,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     td{
         vertical-align: middle;
     }
+    .back {
+        text-align: left;
+    }
     </style>
     <div class="bg">
+        
         <div class="center-screen">
-            <div class="col-xs-12 col-md-7 bg-light p-4 rounded">
+            <div class="col-xs-12 col-md-6 bg-light p-4 rounded">
+            <div class="back">
+                    <a href="<?php echo base_url().'ticket/mytickets'?>"><i class="bi bi-chevron-left"></i> Powrót</a>
+                </div>
                 <h2>Moje bilety</h2>
                 <p>PKP Online</p>
                 <hr>
-                <p>Historia zakupionych biletów</p>
-                <table class="table">
+                <p>Pojedyncze bilety dla zamówienia </p>
+                
+                    <table class="table">
                         <tr>
-                            <td>Ilość	</td>
                             <td>ID biletu	</td>
                             <td>ID user	</td>
                             <td>ID polaczenia	</td>
@@ -58,17 +65,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <td>miejsce	</td>
                             <!-- <td>przedzial</td> -->
                             <td>active</td>
-                            <td>data zakupu</td>
+                            <!-- <td>data zakupu</td> -->
                             <!-- <td>start</td> -->
                             <!-- <td>end</td> -->
-                            <td>payment</td>
+                            <!-- <td>payment</td> -->
                             <td>Akcje</td>
                             <td></td>
                         </tr>
                         <?php foreach($records as $row){?>
                             
                         <tr>
-                            <td><?php echo $row->ilosc; ?></td>
                             <td><?php echo $row->ticket_id; ?></td>
                             <td><?php echo $row->user_id; ?></td>
                             <td><?php echo $row->connection_id; ?></td>
@@ -76,25 +82,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <td><?php echo $row->position; ?></td>
                             <!-- <td><?php echo $row->compartment; ?></td> -->
                             <td><?php echo $row->active; ?></td>
-                            <td><?php echo $row->buytime; ?></td>
+                            <!-- <td><?php echo $row->buytime; ?></td> -->
                             <!-- <td><?php echo $row->start; ?></td> -->
                             <!-- <td><?php echo $row->end; ?></td> -->
-                            <td><?php echo $row->payment; ?></td>
+                            <!-- <td><?php echo $row->payment; ?></td> -->
                             <td>
-                                <a href="<?php echo base_url().'ticket/details/'.$row->ticket_id?>" class="btn btn-primary">Szczegóły</a> 
+                                <?php
+                                    $_SESSION['position'] = $row->position;
+                                ?>
+                                <a href="<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>" onclick="javascript:return confirm('Czy na pewno chcesz anulować ten bilet?')" class="btn btn-danger">Anuluj</a>
                             </td>
-                            <td>
-                            <a href="<?php echo base_url().'ticket/cancelAll/'.$row->ticket_id?>" onclick="javascript:return confirm('Czy na pewno chcesz anulować wszystkie bilety?')" class="btn btn-danger">Anuluj</a> 
-                            </td>
-                            <td>
+                            <!-- <td> 
                                 <?php if ($row->payment == 0) { ?>
                                 <a href="<?php echo base_url().'ticket/pay/'.$row->ticket_id?>" class="btn btn-primary">Opłać</a>
                                 <?php } ?>
-                            </td>
+                            </td> -->
                         </tr>
                         
                         <?php }?>
                     </table>
+                    </div>
             </div>
         </div>
     </div>

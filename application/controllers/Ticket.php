@@ -28,8 +28,13 @@ class Ticket extends CI_Controller {
     {
         $header['page_title'] = "Kupno biletu"; /* tytuł, który będzie widoczny na pasku */
 		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+        // sprawdzenie wlnych miejsc
+        $numSeats=$this->input->post('numSeats');
+        $wolne['records']=$this->Ticket_model->quantity($numSeats); 
+
 		$this->load->view('header', $header);
-        $this->load->view('/ticket/summary');
+
+        $this->load->view('/ticket/summary',$wolne);
     }
     public function addToBase()
     {
@@ -70,6 +75,11 @@ class Ticket extends CI_Controller {
     public function cancel($ticketId)
     {
         $this->Ticket_model->cancelTicket($ticketId);
+        redirect(base_url().'ticket/details/'.$ticketId);
+    }
+    public function cancelAll($ticketId)
+    {
+        $this->Ticket_model->cancelAllTicket($ticketId);
         redirect(base_url().'ticket/mytickets');
     }
     public function pay($ticketId)
@@ -88,5 +98,17 @@ class Ticket extends CI_Controller {
 		$this->load->view('header', $header);
         $data['records'] = $this->Ticket_model->showAll();
         $this->load->view('/ticket/showalltickets',$data);
+    }
+
+    public function details($ticket_id)
+    {
+        $header['page_title'] = "Kupno biletu"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+        $user_id = $this->session->user_id;
+		$this->load->view('header', $header);
+        $data['records'] = $this->Ticket_model->ticketsDetails($user_id, $ticket_id);
+
+        $this->load->view('/ticket/ticketsdetails',$data);
+        
     }
 }
