@@ -9,16 +9,16 @@ class Ticket_model extends CI_Model {
     public $departure_date;
     //??? public skąd/dokąd
     //public $user_id;
-    public function saverecords($numSeats, $user_id, $id_connection, $payment, $from, $where)
+    public function saverecords($numSeats, $user_id, $id_connection, $payment, $id_start, $id_end)
     {
 
         // $start=$this->db->query("SELECT stops_id FROM connections_stops WHERE town = '.$from.'");
         // $end=$this->db->query("SELECT stops_id FROM connections_stops WHERE town = '.$where.'");
         // $this->db->query("INSERT INTO tickets (ticket_id, user_id, train_id, position, active, buytime, start, end) VALUES (DEFAULT, $user_id, 1, $seats, 1, CURRENT_TIMESTAMP, 1, 1) ");
-        
+
         for($i=0;$i<$numSeats;$i++)
         {
-            $this->db->query("INSERT INTO tickets VALUES (DEFAULT, $user_id, $id_connection, 1, 0, 1, 1, CURRENT_TIMESTAMP, 1, 1, $payment) ");
+            $this->db->query("INSERT INTO tickets VALUES (DEFAULT, $user_id, $id_connection, 1, 0, 1, 1, CURRENT_TIMESTAMP, $id_start, $id_end, $payment) ");
         }
         return true;
     }
@@ -52,9 +52,9 @@ class Ticket_model extends CI_Model {
         $query=$this->db->query("SELECT `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, `start`, `end`, `payment` FROM `tickets` WHERE `buytime` = (SELECT buytime FROM tickets WHERE ticket_id = $ticket_id) and `active`= 1 AND `user_id`=$user_id "); //
         return $query->result();
     }
-    public function quantity($numSeats)
+    public function quantity($numSeats, $id_connection, $id_start, $id_end)
     {
-        $query=$this->db->query("SELECT train.train_id, (SUM(compartment.quantity_seats) - (SELECT COUNT(ticket_id) FROM tickets WHERE active = 1 AND connection_id = 8)) AS wolne FROM train INNER JOIN train_carriage ON train.train_id=train_carriage.train_id INNER JOIN carriage ON train_carriage.carriage_id = carriage.carriage_id INNER JOIN carriage_compartment ON carriage.carriage_id = carriage_compartment.carriage_id INNER JOIN compartment ON compartment.compartment_id = carriage_compartment.compartment_id WHERE train.train_id = 1 GROUP BY train.train_id;");
+        $query=$this->db->query("SELECT train.train_id, (SUM(compartment.quantity_seats) - (SELECT COUNT(ticket_id) FROM tickets WHERE active = 1 AND connection_id = $id_connection )) AS wolne FROM train INNER JOIN train_carriage ON train.train_id=train_carriage.train_id INNER JOIN carriage ON train_carriage.carriage_id = carriage.carriage_id INNER JOIN carriage_compartment ON carriage.carriage_id = carriage_compartment.carriage_id INNER JOIN compartment ON compartment.compartment_id = carriage_compartment.compartment_id WHERE train.train_id = 1 GROUP BY train.train_id;");
         return $query->row();
     }
 

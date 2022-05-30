@@ -30,7 +30,10 @@ class Ticket extends CI_Controller {
 		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
         // sprawdzenie wlnych miejsc
         $numSeats=$this->input->post('numSeats');
-        $wolne['records']=$this->Ticket_model->quantity($numSeats); 
+        $id_connection = $this->session->connection_id;
+        $id_start = $this->session->id_start;
+        $id_end = $this->session->id_end;
+        $wolne['records']=$this->Ticket_model->quantity($numSeats, $id_connection, $id_start, $id_end); 
 
 		$this->load->view('header', $header);
 
@@ -42,11 +45,13 @@ class Ticket extends CI_Controller {
         $numSeats=$this->input->post('numSeats');
         $user_id = $this->session->user_id;
         $id_connection = $this->session->connection_id;
+        $id_start = $this->session->id_start;
+        $id_end = $this->session->id_end;
         $from = $this->session->from;
         $where = $this->session->where;
         // $seats=$this->input->post('seats');
 
-        $response=$this->Ticket_model->saverecords($numSeats, $user_id, $id_connection, $payment, $from, $where); 
+        $response=$this->Ticket_model->saverecords($numSeats, $user_id, $id_connection, $payment, $id_start, $id_end); 
         if($response==true) {
             ?>
                 

@@ -71,7 +71,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         $_SESSION['date_from'] = $row['date_from'];
                         $_SESSION['date_to'] = $row['date_to'];
                         $_SESSION['connection_id'] = $row['connection_id'];
-
+                        $_SESSION['id_start'] = $row['id_start'];
+                        $_SESSION['id_end'] = $row['id_end'];
                         ?>
                         <td><a href="<?php echo base_url().'ticket/buy'?>" class="btn btn-primary">Kup</a></td>
                     </tr>
