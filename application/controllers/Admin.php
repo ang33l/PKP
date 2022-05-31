@@ -88,4 +88,14 @@ class Admin extends CI_Controller {
                 )));
         }
     }
+
+    public function connections()
+    {
+        $header['page_title'] = "Połączenia"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "admin"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+        $this->load->model('Search_model');
+        $data['records'] = $this->Search_model->show();
+        $this->load->view('/admin/connections',$data);
+    }
 }

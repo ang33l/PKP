@@ -29,7 +29,7 @@
                 </li>
                 <?php }?>
                 <li>
-                    <a class="nav-link" href="<?= base_url() ?>search/connections">Trasy</a>
+                    <a class="nav-link" href="<?= base_url() ?>admin/connections">Trasy</a>
                 </li>
                 <li>
                     <a class="nav-link" href="<?= base_url() ?>user/settings">Pociągi</a>
