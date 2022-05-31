@@ -58,8 +58,8 @@ class User extends CI_Controller {
 
     public function account()
     {
-        $header['page_title'] = "Konto"; /* tytuł, który będzie widoczny na pasku */
-		$header['nav_item'] = "account"; /* home / search / ticket / account */
+        $header['page_title'] = "Konto";
+		$header['nav_item'] = "account";
 		$this->load->view('header', $header);
         $this->load->model('User_model');
         $user = $this->User_model;
