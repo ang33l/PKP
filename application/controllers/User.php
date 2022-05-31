@@ -13,6 +13,49 @@ class User extends CI_Controller {
         $this->load->view('user/register');
     }
 
+    public function settings()
+    {
+        $header['page_title'] = "Ustawienia"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "account"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+        $this->load->view('user/settings');
+    }
+
+    public function changePassword()
+    {
+        if(!$this->input->post("old_pass") || !$this->input->post("new_pass") || !$this->input->post("re_new_pass")){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nieprawidłowe dane!'
+                )));
+        }
+        if($this->input->post("new_pass") != $this->input->post("re_new_pass")){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nowe hasła nie są takie same!'
+                )));
+        }
+        if($this->input->post("old_pass") == $this->input->post("new_pass")){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nowe hasło nie może być takie samo jak poprzednie!'
+                )));
+        }
+        $this->load->model('User_model');
+        $user = $this->User_model;
+        $old = $this->input->post("old_pass");
+        $new = $this->input->post("new_pass");
+
+        $response = $user->change_password($old, $new);
+        return $response;
+    }
+
     public function account()
     {
         $header['page_title'] = "Konto"; /* tytuł, który będzie widoczny na pasku */

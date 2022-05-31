@@ -143,11 +143,11 @@ function getUser() {
     xmlHttp.send(formData);
 }
 
-function confirmUpdate(){
-    if(confirm("Na pewno chcesz zmienić uprawnienia?")) updateUserType();
+function confirmUpdate() {
+    if (confirm("Na pewno chcesz zmienić uprawnienia?")) updateUserType();
 }
 
-function updateUserType(){
+function updateUserType() {
     var elements = document.getElementsByClassName("formVal1");
     var formData = new FormData();
     for (var i = 0; i < elements.length; i++) {

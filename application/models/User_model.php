@@ -76,7 +76,38 @@ class User_model extends CI_Model {
         return $this->db->query($sql, array($type, $user_id));
     }
 
-    public function change_password(){}
+    public function change_password($old, $new)
+    {
+        $sql = 'SELECT password FROM user WHERE user_id=?;';
+        $query = $this->db->query($sql, array($this->session->user_id));
+        foreach($query->result() as $row){
+            if(password_verify($old, $row->password)){
+                $sql = 'UPDATE user SET password=? WHERE user_id=?;';
+                $query = $this->db->query($sql, array(
+                    password_hash($new, PASSWORD_BCRYPT), 
+                    $this->session->user_id
+                ));
+                return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'success',
+                    'message' => 'Pomyślnie zmieniono hasło!'
+                )));
+            }
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Podane aktualne hasło jest nieprawidłowe!'
+                )));
+        }
+        return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nieznaleziono hasła dla użytkownika!'
+                )));
+    }
     
     public function delete_user(){}
     

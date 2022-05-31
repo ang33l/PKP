@@ -38,6 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <section>
             <div class="container">
                 <div class="col-md-6">
+                    <h4>Twoje dane</h4>
                     <table class="table table-hover">
                         <tbody>
                             <tr>

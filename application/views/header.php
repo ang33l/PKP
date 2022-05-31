@@ -39,6 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                               if($this->session->loggedIn){
                             ?>
                             <li><a href="<?= base_url() ?>user/account">Moje konto</a></li>
+                            <li><a href="<?= base_url() ?>user/settings">Ustawienia</a></li>
                             <li><a href="<?= base_url() ?>user/logout">Wyloguj</a></li>
                             <?php
                             }
