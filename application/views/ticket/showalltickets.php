@@ -50,17 +50,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <p>Zarządzaj zakupionymi biletami</p>
                 <table class="table">
                         <tr>
-                            <td>ID biletu	</td>
-                            <td>ID user	</td>
-                            <td>ID polaczenia	</td>
+                            <td>Numer biletu	</td>
+                            <td>Użytkownik	</td>
+                            <td>Numer polaczenia	</td>
                             <!-- <td>ID pociagu </td> -->
                             <td>miejsca	</td>
                             <!-- <td>przedzial</td> -->
-                            <td>active</td>
-                            <td>data zakupu</td>
+                            <td>Status</td>
+                            <td>Data zakupu</td>
                             <!-- <td>start</td> -->
                             <!-- <td>end</td> -->
-                            <td>payment</td>
+                            <td>Status płatności</td>
                             <td>Akcje</td>
                             <td></td>
                         </tr>
@@ -68,16 +68,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
                         <tr>
                             <td><?php echo $row->ticket_id; ?></td>
-                            <td><?php echo $row->user_id; ?></td>
+                            <td><?php echo $row->user_name; ?></td>
                             <td><?php echo $row->connection_id; ?></td>
                             <!-- <td><?php echo $row->train_id; ?></td> -->
                             <td><?php echo $row->position; ?></td>
                             <!-- <td><?php echo $row->compartment; ?></td> -->
-                            <td><?php echo $row->active; ?></td>
+                            <td><?php if($row->active==0) echo "nieaktywne"; else echo "aktywne"; ?></td>
                             <td><?php echo $row->buytime; ?></td>
                             <!-- <td><?php echo $row->start; ?></td> -->
                             <!-- <td><?php echo $row->end; ?></td> -->
-                            <td><?php echo $row->payment; ?></td>
+                            <td><?php if($row->payment==0) echo "nieopłacone"; else echo "opłacone"; ?></td>
                             <td>
                                 <?php
                                     $_SESSION['position'] = $row->position;

@@ -44,7 +44,7 @@ class Ticket_model extends CI_Model {
     }
     public function showAll()
     {
-        $query=$this->db->query("SELECT t.ticket_id, t.user_id, t.connection_id, t.position, t.active, t.buytime, t.start, t.end, t.payment FROM tickets t INNER JOIN user ON t.user_id=user.user_id INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.name = 'head_admin' AND active=1 ");
+        $query=$this->db->query("SELECT t.ticket_id, user.user_name, t.connection_id, t.position, t.active, t.buytime, t.start, t.end, t.payment FROM tickets t INNER JOIN user ON t.user_id=user.user_id INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.name = 'head_admin' AND active=1 ");
         return $query->result();
     }
     public function ticketsDetails($user_id, $ticket_id)
@@ -57,8 +57,11 @@ class Ticket_model extends CI_Model {
         $query=$this->db->query("SELECT train.train_id, (SUM(compartment.quantity_seats) - (SELECT COUNT(ticket_id) FROM tickets WHERE active = 1 AND connection_id = $id_connection )) AS wolne FROM train INNER JOIN train_carriage ON train.train_id=train_carriage.train_id INNER JOIN carriage ON train_carriage.carriage_id = carriage.carriage_id INNER JOIN carriage_compartment ON carriage.carriage_id = carriage_compartment.carriage_id INNER JOIN compartment ON compartment.compartment_id = carriage_compartment.compartment_id WHERE train.train_id = 1 GROUP BY train.train_id;");
         return $query->row();
     }
-
-    
+    public function cost($id_connection, $id_start, $id_end)
+    {
+        $query=$this->db->query("SELECT COUNT(*) as stops FROM connections_stops WHERE date >= (SELECT date FROM connections_stops WHERE stops_id = $id_start) AND date <= (SELECT date FROM connections_stops WHERE stops_id = $id_end) AND connection_id = $id_connection ORDER BY date; ");
+        return $query->row();
+    }
 }
 
 

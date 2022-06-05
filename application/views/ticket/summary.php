@@ -56,18 +56,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <!-- <input type="hidden" name="connection" class="form-control formVal" value="<?php echo $this->session->id_connection  ?>"> -->
                         <!-- <input type="hidden" name="seats" class="form-control formVal" value="<?php echo $_POST['seats']  ?>"> -->
                         
-                            
-                         
+                        
+                        
+                        
                     </div>
                     <hr>
                     <?php if($records->wolne >= $_POST['numSeats']) { ?>
-                                
+                        <p>Koszt pojedynczego biletu: <?php echo (($row_cost->stops)-1)*10;  ?> zł </p>
+                        <h4>Koszt biletów <?php echo (($row_cost->stops)-1)*$_POST['numSeats']*10;  ?> zł </h4>
                         <?php
                         if ($_POST['payment'] == 'blik') { 
                         ?>
                         <!-- <input type="hidden" name="numSeats" class="form-control formVal" value="<?php echo $_POST['payment']  ?>"> -->
                         <input type="hidden" name="payment" class="form-control formVal" value="1">
                         <div class="mb-3">
+                            <hr>
                             <p>Płatność</p>
                             
                             <div class="mb-3">

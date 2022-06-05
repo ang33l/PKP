@@ -34,10 +34,10 @@ class Ticket extends CI_Controller {
         $id_start = $this->session->id_start;
         $id_end = $this->session->id_end;
         $wolne['records']=$this->Ticket_model->quantity($numSeats, $id_connection, $id_start, $id_end); 
-
+        $cost['row_cost']=$this->Ticket_model->cost($id_connection, $id_start, $id_end); 
 		$this->load->view('header', $header);
-
-        $this->load->view('/ticket/summary',$wolne);
+        //$data = array_merge($wolne, $koszt);
+        $this->load->view('/ticket/summary',$wolne + $cost);
     }
     public function addToBase()
     {
