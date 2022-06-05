@@ -31,13 +31,13 @@
                 <a class="nav-link" href="<?= base_url() ?>admin/connections">Trasy</a>
             </li>
             <li>
-                <a class="nav-link" href="<?= base_url() ?>user/settings">Pociągi</a>
+                <a class="nav-link" href="<?= base_url() ?>admin/trains">Pociągi</a>
             </li>
             <li>
-                <a class="nav-link" href="<?= base_url() ?>user/settings">Wagony</a>
+                <a class="nav-link" href="<?= base_url() ?>admin/carriages">Wagony</a>
             </li>
             <li>
-                <a class="nav-link" href="<?= base_url() ?>user/settings">Przedziały</a>
+                <a class="nav-link" href="<?= base_url() ?>admin/compartments">Przedziały</a>
             </li>
         </ul>
     </nav>

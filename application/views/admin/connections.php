@@ -34,46 +34,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <a class="nav-link active" href="<?= base_url() ?>admin/connections">Trasy</a>
             </li>
             <li>
-                <a class="nav-link" href="<?= base_url() ?>user/settings">Pociągi</a>
+                <a class="nav-link" href="<?= base_url() ?>admin/trains">Pociągi</a>
             </li>
             <li>
-                <a class="nav-link" href="<?= base_url() ?>user/settings">Wagony</a>
+                <a class="nav-link" href="<?= base_url() ?>admin/carriages">Wagony</a>
             </li>
             <li>
-                <a class="nav-link" href="<?= base_url() ?>user/settings">Przedziały</a>
+                <a class="nav-link" href="<?= base_url() ?>admin/compartments">Przedziały</a>
             </li>
         </ul>
     </nav>
-    <section>
-            <div class="col-xs-12">
-                <h2>Trasy</h2>
-                <table class="table">
-                    <tr>
-                        <th>ID trasy</th>
-                        <th>Skąd</th>
-                        <th>Data przybycia</th>
-                        <th>Akcje</th><th></th>
-                    </tr>
-                    <?php foreach($records as $row){?>
-                    <tr>
-                        <td><?= $row->connection_id ?></td>
-                        <td><?= $row->town ?></td>
-                        <td><?= $row->date ?></td>
-                        <td>
-                            <a href="<?php echo base_url().'search/deleteconn/'.$row->stops_id?>" class="btn btn-danger">Usuń</a>
-                        </td>
-                        <td>
-                            <a href="<?php echo base_url().'search/edit/'.$row->stops_id?>" class="btn btn-primary">Edytuj</a>
-                        </td>
-                    </tr>
-                    <?php }?>
-                </table>
+    <div class="col-xs-12">
+        <h2>Trasy</h2>
+        <table class="table">
+            <tr>
+                <th>ID trasy</th>
+                <th>Skąd</th>
+                <th>Data przybycia</th>
+                <th>Akcje</th>
+                <th></th>
+            </tr>
+            <?php foreach($records as $row){?>
+            <tr>
+                <td><?= $row->connection_id ?></td>
+                <td><?= $row->town ?></td>
+                <td><?= $row->date ?></td>
+                <td>
+                    <a href="<?php echo base_url().'search/deleteconn/'.$row->stops_id?>"
+                        class="btn btn-danger">Usuń</a>
+                </td>
+                <td>
+                    <a href="<?php echo base_url().'search/edit/'.$row->stops_id?>" class="btn btn-primary">Edytuj</a>
+                </td>
+            </tr>
+            <?php }?>
+        </table>
+    </div>
+</div>
+</div>
+<footer>
+
+    <div class="container d-md-flex py-4">
+
+        <div class="me-md-auto text-center text-md-start">
+            <div class="copyright">
+                &copy; Copyright <strong><span>PKP Online</span></strong>. Wszelkie prawa zastrzeżone
             </div>
         </div>
     </div>
+</footer>
 </body>
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
 <script>
-
-</html>
+< /html>

@@ -98,4 +98,67 @@ class Admin extends CI_Controller {
         $data['records'] = $this->Search_model->show();
         $this->load->view('/admin/connections',$data);
     }
+
+    public function compartments()
+    {
+        $header['page_title'] = "Przedziały"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "admin"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+        $this->load->model('Compartments_model');
+        $data['records'] = array();
+        foreach($this->Compartments_model->get_all_compartments()->result() as $row){
+            array_push($data['records'], array(
+                'compartment_id' => $row->compartment_id,
+                'quantity_seats' => $row->quantity_seats,
+                'type' => $row->type
+            ));
+        }
+        $this->load->view('admin/compartments', $data);
+    }
+
+    public function compartmentAdd()
+    {
+        if(!$this->input->post('quantity_seats') || !$this->input->post('type')){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Brak danych!'
+                )));
+        }
+        $seats = $this->input->post('quantity_seats');
+        $type = $this->input->post('type');
+
+        if($seats<1){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nie może być mniej niż jedno miejsce w przedziale!'
+                )));
+        }
+
+        $this->load->model('Compartments_model');
+        $Compartments = $this->Compartments_model;
+
+        return $Compartments->add_compartment($seats, $type);
+    }
+
+    public function compartmentDelete($id)
+    {
+        if($id<1){
+            if(!$this->input->post('quantity_seats') || !$this->input->post('type')){
+                return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'danger',
+                        'message' => 'Niepoprawne dane!'
+                    )));
+            }
+        }
+        $this->load->model('Compartments_model');
+        $Compartments = $this->Compartments_model;
+        $Compartments->delete_compartment($id);
+        header("Location: ".base_url().'admin/compartments');
+    }
 }
