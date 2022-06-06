@@ -62,9 +62,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php $lp = 1;
             foreach($records as $row){?>
                     <tr>
-                        <td><?= $row['compartment_id'] ?></td>
-                        <td><?= $row['quantity_seats'] ?></td>
-                        <td><?= $row['type'] ?></td>
+                        <td id="id<?= $row['compartment_id'] ?>"><?= $row['compartment_id'] ?></td>
+                        <td id="seats<?= $row['compartment_id'] ?>"><?= $row['quantity_seats'] ?></td>
+                        <td id="type<?= $row['compartment_id'] ?>"><?= $row['type'] ?></td>
                         <td>
                             <button class="btn btn-danger delete-compartments"
                                 data-value='<?php echo base_url().'admin/compartmentDelete/'.$row['compartment_id']?>'>
@@ -72,8 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </button>
                         </td>
                         <td>
-                            <a href="<?php echo base_url().'admin/compartmentEdit/'.$row['compartment_id']?>"
-                                class="btn btn-primary">Edytuj</a>
+                            <button class="btn btn-primary editBtns" data-value="<?= $row['compartment_id'] ?>">Edytuj</button>
                         </td>
                     </tr>
                     <?php $lp++; }?>
@@ -119,6 +118,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edytuj przedział <span id="modal-compartment-id"></span></h5>
+                <button type="button" id="closeEdit" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="javascript:compartmentEdit()">
+                <div class="modal-body">
+
+                    <div class="mb-3 col-md-8">
+                        <label for="Quantity_seats1" class="form-label">Ilość miejsc</label>
+                        <input name="quantity_seats" type="number" min="1" class="form-control formVal1"
+                            id="Quantity_seats1" required>
+                        <label for="Type1" class="form-label">Typ</label>
+                        <select id="Type1" name="type" class="form-select formVal1" required>
+                            <option value="1. klasa">1. klasa</option>
+                            <option value="2. klasa">2. klasa</option>
+                        </select>
+                        <input type="hidden" class="formVal1" name="compartment_id" id="modal-id">
+                    </div>
+                    <div class="mb-3" id="error-window1" style="display:none">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="dismissEdit" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-primary" id="submitbtn">Zatwierdź zmiany</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <footer>
 
     <div class="container d-md-flex py-4">
@@ -151,6 +186,20 @@ $('.delete-compartments').click(function(e) {
     }
 });
 
+$('.editBtns').click(function(e){
+    var index = e.target.getAttribute('data-value');
+    $('#editModal').modal('show');
+    $('#Quantity_seats1')[0].value = parseInt($('#seats'+index).html());
+    $('#Type1')[0].value = $('#type'+index).html();
+    $('#modal-compartment-id').html($('#id'+index).html());
+    $('#modal-id')[0].value = $('#id'+index).html();
+
+});
+
+$('#dismissEdit, #closeEdit').click(function() {
+    $('#editModal').modal('hide')
+});
+
 function compartmentAdd() {
     var elements = document.getElementsByClassName("formVal");
     var formData = new FormData();
@@ -174,6 +223,32 @@ function compartmentAdd() {
         }
     }
     xmlHttp.open("post", "<?= base_url() ?>admin/compartmentAdd");
+    xmlHttp.send(formData);
+}
+
+function compartmentEdit() {
+    var elements = document.getElementsByClassName("formVal1");
+    var formData = new FormData();
+    for (var i = 0; i < elements.length; i++) {
+        formData.append(elements[i].name, elements[i].value);
+    }
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            var response = JSON.parse(xmlHttp.responseText);
+            document.getElementById("error-window1").style.display = "";
+            document.getElementById("error-window1").innerHTML =
+                '<span class="text-' +
+                response.type + '">' +
+                response.message +
+                '</span>';
+            if (response.type == "success") {
+                setTimeout('document.getElementById("error-window1").style.display = "none"', 2000);
+                setTimeout('window.location.reload(true)', 3000);
+            }
+        }
+    }
+    xmlHttp.open("post", "<?= base_url() ?>admin/compartmentEdit");
     xmlHttp.send(formData);
 }
 </script>

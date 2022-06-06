@@ -161,4 +161,51 @@ class Admin extends CI_Controller {
         $Compartments->delete_compartment($id);
         header("Location: ".base_url().'admin/compartments');
     }
+
+    public function compartmentEdit()
+    {
+        if(!$this->input->post('quantity_seats') || 
+        !$this->input->post('type') ||
+        !$this->input->post('compartment_id')){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'danger',
+                        'message' => 'Niepoprawne dane!'
+                    )));
+        }
+        $post = array(
+            'compartment_id' => $this->input->post('compartment_id'),
+            'quantity_seats' => $this->input->post('quantity_seats'),
+            'type' => $this->input->post('type')
+        );
+        
+        $this->load->model('Compartments_model');
+        $Compartments = $this->Compartments_model;
+        $data = $Compartments->get_one_compartment($post['compartment_id'])[0];
+        if(!array_diff($post, $data)){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'danger',
+                        'message' => 'Aby zmienić dane, muszą się one różnić!'
+                    )));
+        }
+        $update = $Compartments->update_compartment($post['compartment_id'],$post['quantity_seats'], $post['type']);
+        if($update){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'success',
+                        'message' => 'Pomyślnie zaktualizowano przedział!'
+                    )));
+        } else {
+            return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'danger',
+                        'message' => 'Nie udało się zaktualizować przedziału!'
+                    )));
+        }
+    }
 }

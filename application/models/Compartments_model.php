@@ -36,7 +36,28 @@ class Compartments_model extends CI_Model {
     {
         $sql = "DELETE FROM compartment WHERE compartment_id=?;";
         $response = $this->db->query($sql, array($id));
-        var_dump($response);
         return $response;
+    }
+
+    public function update_compartment($id, $seats, $type)
+    {
+        $sql = "UPDATE compartment SET quantity_seats=?, type=? WHERE compartment_id=?;";
+        $response = $this->db->query($sql, array($seats, $type, $id));
+        return $response;
+    }
+
+    public function get_one_compartment($id)
+    {
+        $sql = "SELECT compartment_id, quantity_seats, type FROM compartment WHERE compartment_id=?;";
+        $query = $this->db->query($sql, array($id));
+        $data = array();
+        foreach($query->result() as $row){
+            array_push($data, array(
+                'compartment_id' => $row->compartment_id,
+                'quantity_seats' => $row->quantity_seats,
+                'type' => $row->type
+            ));
+        }
+        return $data;
     }
 }
