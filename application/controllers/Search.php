@@ -69,4 +69,28 @@ class Search extends CI_Controller {
         redirect(base_url().'admin/connections');
         //$this->load->view('/search/edit',$data);
     }
+
+    public function showConn()
+    {
+        $header['page_title'] = "Dodaj połączenie"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "search"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+
+        $this->load->model('Search_model');
+        $data['records'] = $this->Search_model->pickconn();
+        $this->load->view('admin/addconnection',$data);
+    }
+
+    public function addConn()
+    {
+        $header['page_title'] = "Dodaj połączenie"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "search"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+
+        $train_id=$this->input->post('train_id');
+        $this->load->model('Search_model');
+        $this->Search_model->addconn($train_id);
+        redirect(base_url().'admin/connections');
+    }
+
 }

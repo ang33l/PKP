@@ -49,4 +49,18 @@ class Search_Model extends CI_Model {
     {
         $query=$this->db->query("UPDATE connections_stops SET town='$town', date='$date' WHERE stops_id='$stops_id';");
     }
+
+    public function pickconn()
+    {
+        $query=$this->db->query("SELECT train_id FROM train");
+        return $query->result();
+    }
+
+    public function addconn($train)
+    {
+        $train = intval($train);
+        $sql = "INSERT INTO `connections` (`connection_id`, `train_id`) VALUES (DEFAULT, ?);";
+        $query=$this->db->query($sql, array($train));
+    }
+
 }
