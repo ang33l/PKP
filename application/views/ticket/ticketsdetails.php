@@ -94,7 +94,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <?php
                                     $_SESSION['position'] = $row->position;
                                 ?>
+                                <?php if ( strtotime(date("Y-m-d h:m:s")) <= strtotime($row->dateFrom)) {?>
                                 <a href="<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>" onclick="javascript:return confirm('Czy na pewno chcesz anulować ten bilet?')" class="btn btn-danger">Anuluj</a>
+                                <?php } ?>
                             </td>
                             <!-- <td> 
                                 <?php if ($row->payment == 0) { ?>

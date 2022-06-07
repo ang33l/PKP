@@ -86,10 +86,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <a href="<?php echo base_url().'ticket/details/'.$row->ticket_id?>" class="btn btn-primary">Szczegóły</a> 
                             </td>
                             <td>
+                            <?php if ( strtotime(date("Y-m-d h:m:s")) <= strtotime($row->date)) {?>
                             <a href="<?php echo base_url().'ticket/cancelAll/'.$row->ticket_id?>" onclick="javascript:return confirm('Czy na pewno chcesz anulować wszystkie bilety?')" class="btn btn-danger">Anuluj</a> 
-                            </td>
+                            <?php } ?>
+                        </td>
                             <td>
-                                <?php if ($row->payment == 0) { ?>
+                                <?php if ($row->payment == 0 && strtotime(date("Y-m-d h:m:s")) <= strtotime($row->date)) { ?>
                                 <a href="<?php echo base_url().'ticket/pay/'.$row->ticket_id?>" class="btn btn-primary">Opłać</a>
                                 <?php } ?>
                             </td>
