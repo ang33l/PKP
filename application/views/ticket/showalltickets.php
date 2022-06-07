@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </style>
     <div class="bg">
         <div class="center-screen">
-            <div class="col-xs-12 col-md-6 bg-light p-4 rounded">
+            <div class="col-xs-12 col-md-8 bg-light p-4 rounded">
                 <h2>Historia biletów</h2>
                 <p>PKP Online</p>
                 <hr>
@@ -54,12 +54,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <td>Użytkownik	</td>
                             <td>Numer polaczenia	</td>
                             <!-- <td>ID pociagu </td> -->
-                            <td>miejsca	</td>
+                            <!-- <td>miejsca	</td> -->
                             <!-- <td>przedzial</td> -->
                             <td>Status</td>
                             <td>Data zakupu</td>
-                            <!-- <td>start</td> -->
-                            <!-- <td>end</td> -->
+                             <td>start</td> 
+                            <td>end</td> 
                             <td>Status płatności</td>
                             <td>Akcje</td>
                             <td></td>
@@ -71,12 +71,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <td><?php echo $row->user_name; ?></td>
                             <td><?php echo $row->connection_id; ?></td>
                             <!-- <td><?php echo $row->train_id; ?></td> -->
-                            <td><?php echo $row->position; ?></td>
+                            <!-- <td><?php echo $row->position; ?></td> -->
                             <!-- <td><?php echo $row->compartment; ?></td> -->
                             <td><?php if($row->active==0) echo "nieaktywne"; else echo "aktywne"; ?></td>
                             <td><?php echo $row->buytime; ?></td>
-                            <!-- <td><?php echo $row->start; ?></td> -->
-                            <!-- <td><?php echo $row->end; ?></td> -->
+                            <td><?php echo $row->start; ?></td> 
+                            <td><?php echo $row->end; ?></td> 
                             <td><?php if($row->payment==0) echo "nieopłacone"; else echo "opłacone"; ?></td>
                             <td>
                                 <?php
