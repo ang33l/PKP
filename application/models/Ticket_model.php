@@ -25,7 +25,7 @@ class Ticket_model extends CI_Model {
     public function show($user_id)
     {
         // $query=$this->db->query("SELECT `ticket_id`, `user_id`, `connection_id`, `train_id`, `position`, `compartment`, `active`, `buytime`, `start`, `end`, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id");
-        $query=$this->db->query("SELECT COUNT(*) AS ilosc, `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = end) AS end, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id GROUP BY buytime" );
+        $query=$this->db->query("SELECT COUNT(*) AS ilosc, `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = end) AS end, (SELECT connections_stops.date FROM connections_stops WHERE stops_id = start) AS date, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id GROUP BY buytime" );
         return $query->result();
     }
     public function cancelTicket($idTicket)
@@ -49,7 +49,7 @@ class Ticket_model extends CI_Model {
     }
     public function ticketsDetails($user_id, $ticket_id)
     {
-        $query=$this->db->query("SELECT `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = end) AS end, `payment` FROM `tickets` WHERE `buytime` = (SELECT buytime FROM tickets WHERE ticket_id = $ticket_id) and `active`= 1 AND `user_id`=$user_id "); //
+        $query=$this->db->query("SELECT `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = end) AS end, (SELECT connections_stops.date FROM connections_stops WHERE stops_id = start) AS dateFrom, (SELECT connections_stops.date FROM connections_stops WHERE stops_id = end) AS dateTo, `payment` FROM `tickets` WHERE `buytime` = (SELECT buytime FROM tickets WHERE ticket_id = $ticket_id) and `active`= 1 AND `user_id`=$user_id "); //
         //$query=$this->db->query("SELECT t.ticket_id, t.user_id, t.connection_id, t.position, t.active, t.buytime, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.end) AS end FROM tickets t INNER JOIN connections_stops cs ON t.connection_id = cs.connection_id WHERE `buytime` = (SELECT buytime FROM tickets WHERE ticket_id = $ticket_id) and `active`= 1 AND `user_id`=$user_id ;");
         return $query->result();
     }

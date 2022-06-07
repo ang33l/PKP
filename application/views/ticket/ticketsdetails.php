@@ -68,6 +68,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <!-- <td>data zakupu</td> -->
                             <td>Początek</td> 
                             <td>Koniec</td> 
+                            <td>Czas odjazdu</td> 
+                            <td>Czas przyjazdu</td> 
                             <!-- <td>payment</td> -->
                             <td>Akcje</td>
                             <td></td>
@@ -85,6 +87,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <!-- <td><?php echo $row->buytime; ?></td> -->
                             <td><?php echo $row->start; ?></td> 
                             <td><?php echo $row->end; ?></td> 
+                            <td><?php echo $row->dateFrom; ?></td> 
+                            <td><?php echo $row->dateTo; ?></td> 
                             <!-- <td><?php echo $row->payment; ?></td> -->
                             <td>
                                 <?php

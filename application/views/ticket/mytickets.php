@@ -58,9 +58,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <!-- <td>miejsce	</td> -->
                             <!-- <td>przedzial</td> -->
                             <td>Status</td>
-                            <td>data zakupu</td>
-                            <td>start</td>
-                            <td>end</td>
+                            <td>Data zakupu</td>
+                            <td>Początek</td>
+                            <td>Koniec</td>
+                            <td>Czas odjazdu</td>
                             <td>Status płatności</td>
                             <td>Akcje</td>
                             <td></td>
@@ -79,6 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <td><?php echo $row->buytime; ?></td>
                             <td><?php echo $row->start; ?></td> 
                             <td><?php echo $row->end; ?></td> 
+                            <td><?php echo $row->date; ?></td> 
                             <td><?php if($row->payment==0) echo "nieopłacone"; else echo "opłacone"; ?></td>
                             <td>
                                 <a href="<?php echo base_url().'ticket/details/'.$row->ticket_id?>" class="btn btn-primary">Szczegóły</a> 

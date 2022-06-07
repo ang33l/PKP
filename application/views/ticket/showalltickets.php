@@ -58,8 +58,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <!-- <td>przedzial</td> -->
                             <td>Status</td>
                             <td>Data zakupu</td>
-                             <td>start</td> 
-                            <td>end</td> 
+                            <td>Początek</td> 
+                            <td>Koniec</td> 
                             <td>Status płatności</td>
                             <td>Akcje</td>
                             <td></td>
