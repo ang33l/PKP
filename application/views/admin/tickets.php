@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </li>
             <?php }?>
             <li>
-                <a class="nav-link active" href="<?= base_url() ?>admin/connections">Trasy</a>
+                <a class="nav-link" href="<?= base_url() ?>admin/connections">Trasy</a>
             </li>
             <li>
                 <a class="nav-link" href="<?= base_url() ?>admin/trains">Pociągi</a>
@@ -43,39 +43,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <a class="nav-link" href="<?= base_url() ?>admin/compartments">Przedziały</a>
             </li>
             <li>
-                <a class="nav-link" href="<?= base_url() ?>admin/tickets">Bilety</a>
+                <a class="nav-link active" href="<?= base_url() ?>admin/tickets">Bilety</a>
+                <!-- <a class="nav-link active" href="<?= base_url() ?>admin/compartments">Bilety</a> -->
             </li>
         </ul>
     </nav>
+    <section>
     <div class="col-xs-12">
-        <h3>Trasy</h3>
-        <h5>Zarządzanie trasami</h5>
-            <a href="<?php echo base_url().'search/showconn'?>" class="btn btn-success">Dodaj trasę</a>
-            <a href="<?php echo base_url().'search/showstops'?>" class="btn btn-success">Dodaj przystanki</a>
+        <h5>Zarządzaj biletami użytkowików</h5>
         <table class="table">
             <tr>
-                <th>ID trasy</th>
-                <th>Skąd</th>
-                <th>Data przybycia</th>
-                <th>Akcje</th>
-                <th></th>
+                <td>Numer biletu	</td>
+                <td>Użytkownik	</td>
+                <td>Numer polaczenia	</td>
+                <!-- <td>ID pociagu </td> -->
+                <!-- <td>miejsca	</td> -->
+                <!-- <td>przedzial</td> -->
+                <td>Status</td>
+                <td>Data zakupu</td>
+                <td>Początek</td> 
+                <td>Koniec</td> 
+                <td>Status płatności</td>
+                <td>Akcje</td>
+                <td></td>
             </tr>
             <?php foreach($records as $row){?>
+                            
             <tr>
-                <td><?= $row->connection_id ?></td>
-                <td><?= $row->town ?></td>
-                <td><?= $row->date ?></td>
+                <td><?php echo $row->ticket_id; ?></td>
+                <td><?php echo $row->user_name; ?></td>
+                <td><?php echo $row->connection_id; ?></td>
+                <!-- <td><?php echo $row->train_id; ?></td> -->
+                <!-- <td><?php echo $row->position; ?></td> -->
+                <!-- <td><?php echo $row->compartment; ?></td> -->
+                <td><?php if($row->active==0) echo "nieaktywne"; else echo "aktywne"; ?></td>
+                <td><?php echo $row->buytime; ?></td>
+                <td><?php echo $row->start; ?></td> 
+                <td><?php echo $row->end; ?></td> 
+                <td><?php if($row->payment==0) echo "nieopłacone"; else echo "opłacone"; ?></td>
                 <td>
-                    <a href="<?php echo base_url().'search/deleteconn/'.$row->stops_id?>"
-                        class="btn btn-danger" onclick="javascript:return confirm('Czy na pewno chcesz usunąć ten przystanek?')">Usuń</a>
-                </td>
-                <td>
-                    <a href="<?php echo base_url().'search/edit/'.$row->stops_id?>" class="btn btn-primary">Edytuj</a>
+                    <a href="<?php echo base_url().'admin/cancel/'.$row->ticket_id?>" onclick="javascript:return confirm('Czy na pewno chcesz anulować ten bilet?')" class="btn btn-danger">Anuluj</a>
                 </td>
             </tr>
-            <?php }?>
+                        
+             <?php }?>
         </table>
     </div>
+            </section>
 </div>
 </div>
 <footer>
