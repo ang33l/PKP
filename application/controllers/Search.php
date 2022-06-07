@@ -34,14 +34,14 @@ class Search extends CI_Controller {
 		$this->load->view('header', $header);
         $this->load->model('Search_model');
         $data['records'] = $this->Search_model->show();
-        $this->load->view('/search/connections',$data);
+        $this->load->view('/admin/connections',$data);
     }
 
     public function deleteconn($stops_id)
     {
         $this->load->model('Search_model');
         $this->Search_model->delete($stops_id);
-        redirect(base_url().'search/connections');
+        redirect(base_url().'admin/connections');
     }
 
     public function edit($id)
@@ -52,7 +52,7 @@ class Search extends CI_Controller {
 
         $this->load->model('Search_model');
         $data['records'] = $this->Search_model->edit($id);
-        $this->load->view('/search/edit',$data);
+        $this->load->view('/admin/edit',$data);
     }
 
     public function update($id)
@@ -66,7 +66,31 @@ class Search extends CI_Controller {
 
         $this->load->model('Search_model');
         $data['records'] = $this->Search_model->updatecon($townn,$daten,$id);
-        redirect(base_url().'search/connections');
+        redirect(base_url().'admin/connections');
         //$this->load->view('/search/edit',$data);
     }
+
+    public function showConn()
+    {
+        $header['page_title'] = "Dodaj połączenie"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "search"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+
+        $this->load->model('Search_model');
+        $data['records'] = $this->Search_model->pickconn();
+        $this->load->view('admin/addconnection',$data);
+    }
+
+    public function addConn()
+    {
+        $header['page_title'] = "Dodaj połączenie"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "search"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+
+        $train_id=$this->input->post('train_id');
+        $this->load->model('Search_model');
+        $this->Search_model->addconn($train_id);
+        redirect(base_url().'admin/connections');
+    }
+
 }

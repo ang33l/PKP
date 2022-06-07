@@ -45,6 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
+                <a href="<?php echo base_url().'search/connections'?>" class="btn btn-danger float-end">Cofnij</a>
                 <h2>Edytuj połączenie</h2>
                 <p>PKP Online</p>
                 <hr>

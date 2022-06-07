@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
     body,
     html {
@@ -44,35 +45,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
-                <h2>Edytuj połączenia</h2>
+                <a href="<?php echo base_url().'search/connections'?>" class="btn btn-danger float-end">Cofnij</a>
+                <h2>Dodaj nową trasę</h2>
                 <p>PKP Online</p>
-                <table class="table">
-                    <tr>
-                        <th>ID trasy</th>
-                        <th>Skąd</th>
-                        <th>Data przybycia</th>
-                        <th>Akcje</th>
-                    </tr>
-                    <?php foreach($records as $row){?>
-                    <tr>
-                        <td><?= $row->connection_id ?></td>
-                        <td><?= $row->town ?></td>
-                        <td><?= $row->date ?></td>
-                        <td>
-                            <a href="<?php echo base_url().'search/deleteconn/'.$row->stops_id?>" class="btn btn-danger">Usuń</a>
-                        </td>
-                        <td>
-                            <a href="<?php echo base_url().'search/edit/'.$row->stops_id?>" class="btn btn-primary">Edytuj</a>
-                        </td>
-                    </tr>
-                    <?php }?>
-                </table>
+                    <form action="<?php echo base_url().'search/addConn'?>" method="post">
+                    <label for="pick">Wybierz dla którego pociągu chcesz utworzyć nową trasę:</label>
+
+                        <select id="train_id" class="form-select" name="train_id" required>
+                            <?php foreach($records as $r){?>
+                                <option value="<?= $r->train_id?>"><?= $r->train_id?></option>
+                            <?php }?>
+                        </select><br>
+                        
+                        <button type="submit" class="btn btn-success" id="submitbtn">Dodaj trasę</button>
+                    </form>
             </div>
         </div>
     </div>
 </body>
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
-<script>
+
 
 </html>

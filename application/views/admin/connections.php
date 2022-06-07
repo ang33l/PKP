@@ -45,7 +45,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </ul>
     </nav>
     <div class="col-xs-12">
-        <h2>Trasy</h2>
+        <h3>Trasy</h3>
+        <h5>Zarządzanie trasami</h5>
+            <a href="<?php echo base_url().'search/showconn'?>" class="btn btn-success">Dodaj trasę</a>
+            <a href="<?php echo base_url().'search/showstops'?>" class="btn btn-success">Dodaj przystanki</a>
         <table class="table">
             <tr>
                 <th>ID trasy</th>
@@ -61,7 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <td><?= $row->date ?></td>
                 <td>
                     <a href="<?php echo base_url().'search/deleteconn/'.$row->stops_id?>"
-                        class="btn btn-danger">Usuń</a>
+                        class="btn btn-danger" onclick="javascript:return confirm('Czy na pewno chcesz usunąć ten przystanek?')">Usuń</a>
                 </td>
                 <td>
                     <a href="<?php echo base_url().'search/edit/'.$row->stops_id?>" class="btn btn-primary">Edytuj</a>
