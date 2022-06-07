@@ -4,7 +4,7 @@ class Search_Model extends CI_Model {
     public function search($from, $to, $date)
     {
         $query=$this->db->query("SELECT town, DATE_FORMAT(date, '%Y-%m-%d %H:%i') as data, connection_id, stops_id FROM connections_stops 
-        WHERE town='$from' AND date BETWEEN '$date' - INTERVAL 12 HOUR AND '$date' + INTERVAL 12 HOUR ORDER BY date;");
+        WHERE town='$from' AND date>=NOW() AND date BETWEEN '$date' - INTERVAL 12 HOUR AND '$date' + INTERVAL 12 HOUR ORDER BY date;");
     
         $arr = array();
         foreach($query->result() as $row )
@@ -52,7 +52,7 @@ class Search_Model extends CI_Model {
 
     public function pickconn()
     {
-        $query=$this->db->query("SELECT train_id FROM train");
+        $query=$this->db->query("SELECT train_id FROM train ORDER BY train_id");
         return $query->result();
     }
 
@@ -61,6 +61,12 @@ class Search_Model extends CI_Model {
         $train = intval($train);
         $sql = "INSERT INTO `connections` (`connection_id`, `train_id`) VALUES (DEFAULT, ?);";
         $query=$this->db->query($sql, array($train));
+    }
+
+    public function pickstops()
+    {
+        $query=$this->db->query("SELECT connection_id FROM connections ORDER BY connection_id");
+        return $query->result();
     }
 
 }

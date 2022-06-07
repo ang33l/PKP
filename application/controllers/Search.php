@@ -92,5 +92,35 @@ class Search extends CI_Controller {
         $this->Search_model->addconn($train_id);
         redirect(base_url().'admin/connections');
     }
+    
+    public function showStops()
+    {
+        $header['page_title'] = "Dodaj przystanki"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "search"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
 
+        $this->load->model('Search_model');
+        $data['records'] = $this->Search_model->pickstops();
+        $this->load->view('admin/addstops',$data);
+    }
+
+    public function addStops()
+    {
+        $town=$this->input->post('town');
+        $date=$this->input->post('depature-time');
+        $conn=$this->input->post('connection_id');
+        $int=intval($conn);
+        
+        for($i=0; $i<count($town); $i++){
+            $data[] = [
+                'connection_id' => $int,
+                'town' => $town[$i],
+                'date' => $date[$i]
+            ];
+        }
+        $result = $this->db->insert_batch('connections_stops',$data);
+       
+        redirect(base_url().'admin/connections');
+
+    }
 }
