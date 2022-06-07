@@ -60,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <input type="text" name="town[]" class="form-control" placeholder="Nazwa przystanku" required>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="datetime" name="depature-time[]" id="pick_date" class="form-control picker" />
+                                    <input type="datetime-local" name="depature-time[]" id="pick_date" class="form-control picker" />
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <button class="btn btn-success add_item_btn d-grid">Dodaj kolejny</button>
@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <input type="text" name="town[]" class="form-control" placeholder="Nazwa przystanku" required>
                     </div>
                     <div class="col-md-4">
-                        <input type="datetime" name="depature-time[]" id="pick_date" class="form-control picker" >
+                        <input type="datetime-local" name="depature-time[]" id="pick_date" class="form-control picker" >
                     </div>
                     <div class="col-md-4 mb-3">
                         <button class="btn btn-danger remove_item_btn d-grid">Usuń</button>
@@ -98,10 +98,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             let row_item = $(this).parent().parent();
             $(row_item).remove();
         });
-    });
+    }); 
 </script>
 
-
+<!--
 <script>
 conf = {
     enableTime: true,
@@ -113,5 +113,5 @@ conf = {
 
 flatpickr(".picker", conf);
 </script>
-
+-->
 </html>
