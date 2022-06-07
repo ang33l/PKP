@@ -208,4 +208,151 @@ class Admin extends CI_Controller {
                     )));
         }
     }
+
+    public function carriages()
+    {
+        $header['page_title'] = "Wagony"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "admin"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+
+        $this->load->model('Carriage_model');
+        $data['records'] = array();
+        foreach($this->Carriage_model->get_all_carriages()->result() as $row){
+            if(!isset($data['records'][$row->carriage_id])){
+                $data['records'][$row->carriage_id] = array('compartments' => array());
+                $data['records'][$row->carriage_id]['summedSeats'] = 0;
+            }
+            array_push($data['records'][$row->carriage_id]['compartments'], array(
+                'compartment' => $row->compartment_id,
+                'seats' => $row->quantity_seats 
+            ));
+            $data['records'][$row->carriage_id]['summedSeats'] += $row->quantity_seats;
+
+        }
+        foreach($data['records'] as $index => $row){
+            $data['records'][$index]['summedCompartments'] = count($row['compartments']);
+        }
+
+        $this->load->model('Compartments_model');
+        $data['compartments'] = array();
+        foreach($this->Compartments_model->get_all_compartments()->result() as $row){
+            array_push($data['compartments'], array(
+                'compartment_id' => $row->compartment_id,
+                'quantity_seats' => $row->quantity_seats,
+                'type' => $row->type
+            ));
+        }
+
+        $this->load->view('admin/carriages', $data);
+    }
+
+    public function carriageAdd()
+    {
+        if(!$this->input->post('compartments')){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                    ->set_status_header(200)
+                    ->set_output(json_encode(array(
+                        'type' => 'danger',
+                        'message' => 'Niepoprawne dane!'
+                    )));
+        }
+        $this->load->model('Carriage_model');
+        $carriage_id = $this->Carriage_model->add_carriage();
+        $compartments = explode(',',str_replace(' ', '', $this->input->post('compartments')));
+
+        if(!$this->Carriage_model->verify_compartments_existence($compartments)){
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Nie można dadać przedziału, który nie istnieje!'
+            )));
+        }
+
+        $response = $this->Carriage_model->add_carriage_compartments($carriage_id, $compartments);
+
+        if($response){
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'success',
+                'message' => 'Pomyślnie dodano nowy wagon!'
+            )));
+        } else{
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Nie udało się dodać wagonu!'
+            )));
+        }
+    }
+
+    public function carriageDelete($id)
+    {
+        if($id<1){
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Niepoprawne dane!'
+            )));
+        }
+
+        $this->load->model('Carriage_model');
+        $this->Carriage_model->delete_carriage($id);
+        
+        header("Location: ".base_url().'admin/carriages');
+    }
+
+    public function carriageEdit()
+    {
+        if(!$this->input->post('compartments') || !$this->input->post('carriage_id')){
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Niepoprawne dane!'
+            )));
+        }
+        $this->load->model('Carriage_model');
+        $carriage_id = $this->input->post('carriage_id');
+        $compartments = explode(',',str_replace(' ', '', $this->input->post('compartments')));
+
+        if(!$this->Carriage_model->verify_compartments_existence($compartments)){
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Nie można dadać przedziału, który nie istnieje!'
+            )));
+        }
+
+        if($this->Carriage_model->verify_compartments_equals($carriage_id, $compartments)){
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Aby zmienić dane, muszą się one różnić!'
+            )));
+        }
+
+        $response = $this->Carriage_model->update_carriage($carriage_id, $compartments);
+
+        if($response){
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'success',
+                'message' => 'Pomyślnie zmieniono przedziały!'
+            )));
+        }else{
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Nie udało się zmienić przedziałów w bazie!'
+            )));
+        }
+    }
 }
