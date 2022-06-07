@@ -46,43 +46,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
                 <a href="<?php echo base_url().'search/connections'?>" class="btn btn-danger float-end">Cofnij</a>
-                <h2>Edytuj połączenie</h2>
+                <h2>Dodaj nową trasę</h2>
                 <p>PKP Online</p>
-                <hr>
-                
-                <form action="<?php echo site_url('search/update/'.array_column($records, 'stops_id')[0]); ?>" method="post">
-                <?php foreach($records as $r){?>
-                    <div class="mb-3">
-                        <label for="" class="form-label">Skąd</label>
-                        <input name="from-where" type="text" value="<?= $r->town?>" class="form-control" required>
-                    </div>
-                    <div class="mb-3" class="form-label">
-                        <label for="">Wybierz datę</label>
-                        <input name="depature-time" id="pick_date" value="<?= $r->date?>" type="datetime" class="form-control" />
-                    </div>
+                    <form action="<?php echo base_url().'search/addConn'?>" method="post">
+                    <label for="pick">Wybierz dla którego pociągu chcesz utworzyć nową trasę:</label>
 
-                    <button type="submit" class="btn btn-success" id="submitbtn">Update</button>
-                <?php }?>
-                </form>
-                
+                        <select id="train_id" class="form-select" name="train_id" required>
+                            <?php foreach($records as $r){?>
+                                <option value="<?= $r->train_id?>"><?= $r->train_id?></option>
+                            <?php }?>
+                        </select><br>
+                        
+                        <button type="submit" class="btn btn-success" id="submitbtn">Dodaj trasę</button>
+                    </form>
             </div>
         </div>
     </div>
 </body>
 <script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-conf = {
-    //altInput: true,
-    enableTime: true,
-    dateFormat: "Y-m-d H:i:S",
-    time_24hr: true,
-    enableSeconds: true
-    //minDate: "today"
-}
 
-flatpickr("#pick_date", conf);
-</script>
 
 </html>
