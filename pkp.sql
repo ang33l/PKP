@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 24 Maj 2022, 15:28
+-- Czas generowania: 08 Cze 2022, 07:36
 -- Wersja serwera: 10.4.22-MariaDB
 -- Wersja PHP: 8.1.2
 
@@ -86,13 +86,14 @@ INSERT INTO `compartment` (`compartment_id`, `quantity_seats`, `type`) VALUES
 (2, 15, '1. klasa'),
 (3, 20, '2. klasa'),
 (4, 10, '2. klasa'),
-(5, 15, '2. klasa'),
+(5, 12, '2. klasa'),
 (6, 20, '1. klasa'),
 (7, 25, '1. klasa'),
 (8, 25, '2. klasa'),
 (9, 30, '1. klasa'),
 (10, 30, '2. klasa'),
-(11, 35, '1. klasa');
+(11, 35, '1. klasa'),
+(12, 14, '2. klasa');
 
 -- --------------------------------------------------------
 
@@ -113,8 +114,12 @@ INSERT INTO `connections` (`connection_id`, `train_id`) VALUES
 (1, 1),
 (10, 1),
 (11, 1),
+(41, 1),
+(43, 1),
 (8, 2),
-(9, 2);
+(9, 2),
+(42, 3),
+(28, 4);
 
 -- --------------------------------------------------------
 
@@ -134,10 +139,25 @@ CREATE TABLE `connections_stops` (
 --
 
 INSERT INTO `connections_stops` (`stops_id`, `connection_id`, `town`, `date`) VALUES
-(1, 8, 'Kraków', '2022-05-20 13:31:10'),
-(2, 8, 'Warszawa', '2022-05-20 16:31:10'),
-(3, 8, 'Wieliczka', '2022-05-20 12:32:56'),
-(4, 8, 'Nowy Sącz', '2022-05-20 11:32:56');
+(15, 1, 'Nowy Sącz', '2022-06-09 17:22:00'),
+(16, 1, 'Wieliczka', '2022-06-09 19:12:17'),
+(17, 1, 'Kraków', '2022-06-09 20:27:17'),
+(18, 1, 'Warszawa', '2022-06-09 22:12:17'),
+(19, 8, 'Nowy Sącz', '2022-06-08 22:13:11'),
+(20, 8, 'Wieliczka', '2022-06-08 23:13:11'),
+(21, 8, 'Kraków', '2022-06-09 00:23:11'),
+(22, 8, 'Warszawa', '2022-06-09 02:13:11'),
+(23, 9, 'Nowy Sącz', '2022-06-08 01:34:14'),
+(24, 9, 'Warszawa', '2022-06-08 05:34:14'),
+(25, 9, 'Kraków', '2022-06-08 02:34:14'),
+(26, 9, 'Wieliczka', '2022-06-08 03:34:14'),
+(27, 10, 'Nowy Sącz', '2022-06-08 12:32:04'),
+(28, 10, 'Wieliczka', '2022-06-08 14:32:04'),
+(29, 10, 'Kraków', '2022-06-08 15:32:04'),
+(31, 10, 'Warszawa', '2022-06-08 17:01:22'),
+(33, 28, 'Kraków', '2022-06-08 17:58:40'),
+(34, 28, 'Warszawa', '2022-06-08 19:58:40'),
+(78, 1, 'Bochnia', '2022-06-09 18:00:00');
 
 -- --------------------------------------------------------
 
@@ -164,9 +184,14 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`ticket_id`, `user_id`, `connection_id`, `train_id`, `position`, `compartment`, `active`, `buytime`, `start`, `end`, `payment`) VALUES
-(1, 1, 1, 1, 4, 1, 0, '2022-05-24 13:27:23', 1, 1, 1),
-(2, 1, 1, 1, 3, 1, 0, '2022-05-24 13:27:33', 1, 1, 1),
-(3, 1, 1, 1, 6, 1, 1, '2022-05-24 13:27:43', 1, 1, 0);
+(0, 1, 1, 1, 1, 1, 0, '2022-05-24 13:58:11', 1, 1, 1),
+(0, 1, 1, 1, 2, 1, 0, '2022-05-24 13:59:16', 1, 1, 1),
+(0, 1, 1, 1, 1, 1, 0, '2022-05-24 14:00:12', 1, 1, 1),
+(0, 1, 1, 1, 1, 1, 0, '2022-05-24 16:03:47', 1, 1, 1),
+(0, 1, 1, 1, 1, 1, 0, '2022-05-24 16:04:36', 1, 1, 1),
+(0, 1, 1, 1, 3, 1, 0, '2022-05-24 16:04:47', 1, 1, 1),
+(0, 1, 8, 1, 0, 1, 1, '2022-06-06 18:12:42', 19, 20, 0),
+(0, 1, 8, 1, 0, 1, 1, '2022-06-06 18:12:42', 19, 20, 0);
 
 -- --------------------------------------------------------
 
@@ -184,7 +209,9 @@ CREATE TABLE `train` (
 
 INSERT INTO `train` (`train_id`) VALUES
 (1),
-(2);
+(2),
+(3),
+(4);
 
 -- --------------------------------------------------------
 
@@ -249,7 +276,9 @@ CREATE TABLE `user_type` (
 --
 
 INSERT INTO `user_type` (`user_type_id`, `name`) VALUES
-(1, 'head_admin');
+(1, 'head_admin'),
+(2, 'admin'),
+(3, 'user');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -280,8 +309,7 @@ ALTER TABLE `compartment`
 --
 ALTER TABLE `connections`
   ADD PRIMARY KEY (`connection_id`),
-  ADD KEY `train_id` (`train_id`),
-  ADD KEY `train_id_2` (`train_id`);
+  ADD KEY `train_id` (`train_id`);
 
 --
 -- Indeksy dla tabeli `connections_stops`
@@ -294,7 +322,6 @@ ALTER TABLE `connections_stops`
 -- Indeksy dla tabeli `tickets`
 --
 ALTER TABLE `tickets`
-  ADD PRIMARY KEY (`ticket_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `connection_id` (`connection_id`),
   ADD KEY `train_id` (`train_id`),
@@ -336,43 +363,37 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT dla tabeli `carriage`
 --
 ALTER TABLE `carriage`
-  MODIFY `carriage_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `carriage_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `carriage_compartment`
 --
 ALTER TABLE `carriage_compartment`
-  MODIFY `carriage_compartment_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `carriage_compartment_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT dla tabeli `compartment`
 --
 ALTER TABLE `compartment`
-  MODIFY `compartment_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `compartment_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT dla tabeli `connections`
 --
 ALTER TABLE `connections`
-  MODIFY `connection_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `connection_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT dla tabeli `connections_stops`
 --
 ALTER TABLE `connections_stops`
-  MODIFY `stops_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT dla tabeli `tickets`
---
-ALTER TABLE `tickets`
-  MODIFY `ticket_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `stops_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT dla tabeli `train`
 --
 ALTER TABLE `train`
-  MODIFY `train_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `train_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `train_carriage`
@@ -384,13 +405,13 @@ ALTER TABLE `train_carriage`
 -- AUTO_INCREMENT dla tabeli `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT dla tabeli `user_type`
 --
 ALTER TABLE `user_type`
-  MODIFY `user_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ograniczenia dla zrzutów tabel
