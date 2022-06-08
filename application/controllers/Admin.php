@@ -355,4 +355,19 @@ class Admin extends CI_Controller {
             )));
         }
     }
+    public function tickets()
+    {
+        $this->load->model('Ticket_model');
+        $header['page_title'] = "Wszystkie bilety bilety"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+        $data['records'] = $this->Ticket_model->showAll();
+        $this->load->view('/admin/tickets',$data);
+    }
+    public function cancel($ticketId)
+    {
+        $this->load->model('Ticket_model');
+        $this->Ticket_model->cancelTicket($ticketId);
+        redirect(base_url().'admin/tickets/'.$ticketId);
+    }
 }

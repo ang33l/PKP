@@ -62,12 +62,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <!-- <td>ID user	</td> -->
                             <td>Numer polaczenia	</td>
                             <!-- <td>ID pociagu </td> -->
-                            <td>miejsce	</td>
+                            <!-- <td>miejsce	</td> -->
                             <!-- <td>przedzial</td> -->
-                            <td>active</td>
+                            <td>Status</td>
                             <!-- <td>data zakupu</td> -->
-                            <!-- <td>start</td> -->
-                            <!-- <td>end</td> -->
+                            <td>Początek</td> 
+                            <td>Koniec</td> 
+                            <td>Czas odjazdu</td> 
+                            <td>Czas przyjazdu</td> 
                             <!-- <td>payment</td> -->
                             <td>Akcje</td>
                             <td></td>
@@ -79,18 +81,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <!-- <td><?php echo $row->user_id; ?></td> -->
                             <td><?php echo $row->connection_id; ?></td>
                             <!-- <td><?php echo $row->train_id; ?></td> -->
-                            <td><?php echo $row->position; ?></td>
+                            <!-- <td><?php echo $row->position; ?></td> -->
                             <!-- <td><?php echo $row->compartment; ?></td> -->
                             <td><?php if($row->active==0) echo "nieaktywne"; else echo "aktywne"; ?></td>
                             <!-- <td><?php echo $row->buytime; ?></td> -->
-                            <!-- <td><?php echo $row->start; ?></td> -->
-                            <!-- <td><?php echo $row->end; ?></td> -->
+                            <td><?php echo $row->start; ?></td> 
+                            <td><?php echo $row->end; ?></td> 
+                            <td><?php echo $row->dateFrom; ?></td> 
+                            <td><?php echo $row->dateTo; ?></td> 
                             <!-- <td><?php echo $row->payment; ?></td> -->
                             <td>
                                 <?php
                                     $_SESSION['position'] = $row->position;
                                 ?>
+                                <?php if ( strtotime(date("Y-m-d h:m:s")) <= strtotime($row->dateFrom)) {?>
                                 <a href="<?php echo base_url().'ticket/cancel/'.$row->ticket_id?>" onclick="javascript:return confirm('Czy na pewno chcesz anulować ten bilet?')" class="btn btn-danger">Anuluj</a>
+                                <?php } ?>
                             </td>
                             <!-- <td> 
                                 <?php if ($row->payment == 0) { ?>

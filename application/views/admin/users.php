@@ -39,6 +39,9 @@
             <li>
                 <a class="nav-link" href="<?= base_url() ?>admin/compartments">Przedziały</a>
             </li>
+            <li>
+                <a class="nav-link" href="<?= base_url() ?>admin/tickets">Bilety</a>
+            </li>
         </ul>
     </nav>
     <section>
