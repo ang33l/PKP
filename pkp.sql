@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 08 Cze 2022, 07:36
+-- Czas generowania: 08 Cze 2022, 09:53
 -- Wersja serwera: 10.4.22-MariaDB
 -- Wersja PHP: 8.1.2
 
@@ -184,14 +184,8 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`ticket_id`, `user_id`, `connection_id`, `train_id`, `position`, `compartment`, `active`, `buytime`, `start`, `end`, `payment`) VALUES
-(0, 1, 1, 1, 1, 1, 0, '2022-05-24 13:58:11', 1, 1, 1),
-(0, 1, 1, 1, 2, 1, 0, '2022-05-24 13:59:16', 1, 1, 1),
-(0, 1, 1, 1, 1, 1, 0, '2022-05-24 14:00:12', 1, 1, 1),
-(0, 1, 1, 1, 1, 1, 0, '2022-05-24 16:03:47', 1, 1, 1),
-(0, 1, 1, 1, 1, 1, 0, '2022-05-24 16:04:36', 1, 1, 1),
-(0, 1, 1, 1, 3, 1, 0, '2022-05-24 16:04:47', 1, 1, 1),
-(0, 1, 8, 1, 0, 1, 1, '2022-06-06 18:12:42', 19, 20, 0),
-(0, 1, 8, 1, 0, 1, 1, '2022-06-06 18:12:42', 19, 20, 0);
+(1, 1, 8, 1, 0, 1, 1, '2022-06-08 07:22:23', 19, 21, 1),
+(2, 1, 8, 1, 0, 1, 1, '2022-06-08 07:22:23', 19, 21, 1);
 
 -- --------------------------------------------------------
 
@@ -322,6 +316,7 @@ ALTER TABLE `connections_stops`
 -- Indeksy dla tabeli `tickets`
 --
 ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`ticket_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `connection_id` (`connection_id`),
   ADD KEY `train_id` (`train_id`),
@@ -388,6 +383,12 @@ ALTER TABLE `connections`
 --
 ALTER TABLE `connections_stops`
   MODIFY `stops_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+
+--
+-- AUTO_INCREMENT dla tabeli `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `ticket_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `train`
