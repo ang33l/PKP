@@ -370,4 +370,54 @@ class Admin extends CI_Controller {
         $this->Ticket_model->cancelTicket($ticketId);
         redirect(base_url().'admin/tickets/'.$ticketId);
     }
+
+    public function trains()
+    {
+        $header['page_title'] = "Zarządzanie pociągami"; /* tytuł, który będzie widoczny na pasku */
+		$header['nav_item'] = "admin"; /* home / search / ticket / account */
+		$this->load->view('header', $header);
+        $this->load->model('Train_model');
+        $response = $this->Train_model->get_all_trains();
+
+        $data['records'] = array();
+
+        foreach($response->result() as $row){
+            array_push($data['records'], array(
+                'train_id' => $row->train_id,
+                'sum_seats' => $row->sum_seats
+            ));
+        }
+        $response = $this->Train_model->get_all_carriages();
+        $data['carriages'] = array();
+
+        foreach($response->result()  as $row){
+            if(!isset($data['carriages'][$row->train_id])){
+                $data['carriages'][$row->train_id] = array();
+            }
+            array_push($data['carriages'][$row->train_id], $row->carriage_id);
+        }
+
+        $response = $this->Train_model->get_carriages_for_modal();
+        $data['modal'] = array();
+
+        foreach($response->result()  as $row){
+            $data['modal'][$row->carriage_id] = $row->sum_seats;
+        }
+
+        $this->load->view('/admin/trains',$data);
+    }
+
+    public function trainAdd()
+    {
+        if(!$this->input->post('carriages')){
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Błędne dane!'
+            )));
+        }
+
+        
+    }
 }
