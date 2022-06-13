@@ -31,4 +31,82 @@ class Train_model extends CI_Model {
 
         return $query;
     }
+
+    public function verify_carriages($carriages)
+    {
+        $sql = "SELECT carriage_id FROM carriage;";
+
+        $query = $this->db->query($sql);
+        $dbData = array();
+        foreach($query->result() as $row){
+            array_push($dbData, $row->carriage_id);
+        }
+
+        foreach($carriages as $c){
+            if(array_search($c, $dbData, TRUE) === FALSE){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function add_train($carriages){
+        $sql = "INSERT INTO train(train_id) VALUES (DEFAULT);";
+        $response = $this->db->query($sql);
+
+        if(!$response){
+            return false;
+        }
+
+        $sql = "SELECT MAX(train_id) AS id FROM train;";
+        $train_id = "";
+        $query = $this->db->query($sql);
+        foreach($query->result() as $row){
+            $train_id = $row->id;
+        }
+        
+        $sql = "INSERT INTO train_carriage (train_carriage_id, train_id, carriage_id) VALUES ";
+        for($i=0; $i<count($carriages); $i++){
+            $sql .= "(DEFAULT, " . intval($train_id) .",  " . intval($carriages[$i]) . ")";
+            if($i == count($carriages)-1){
+                $sql .= ";";
+            } else {
+                $sql .= ",";
+            }
+        }
+        $response = $this->db->query($sql);
+
+        return $response;
+    }
+
+    public function delete_train($id)
+    {
+        $sql = "DELETE FROM train_carriage WHERE train_id=?;";
+
+        $this->db->query($sql, array($id));
+
+        $sql = "DELETE FROM train WHERE train_id=?;";
+
+        $this->db->query($sql, array($id));
+    }
+
+    public function edit_train($train_id, $carriages)
+    {
+        $sql = "DELETE FROM train_carriage WHERE train_id=?";
+        $this->db->query($sql, array($train_id));
+
+        $sql = "INSERT INTO train_carriage (train_carriage_id, train_id, carriage_id) VALUES ";
+        for($i=0; $i<count($carriages); $i++){
+            $sql .= "(DEFAULT, " . intval($train_id) .",  " . intval($carriages[$i]) . ")";
+            if($i == count($carriages)-1){
+                $sql .= ";";
+            } else {
+                $sql .= ",";
+            }
+        }
+        $response = $this->db->query($sql);
+
+        return $response;
+    }
 }

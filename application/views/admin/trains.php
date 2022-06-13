@@ -67,8 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     ?>
                     <tr>
                         <td><?= $row['train_id'] ?></td>
-                        <td>
-                            <?= count($carriages[$row['train_id']]) ?>
+                        <td id="carriages<?= $row['train_id'] ?>" data-value="<?= implode(', ', $carriages[$row['train_id']]) ?>">
+                            <?= count($carriages[$row['train_id']]) ?>  
                             <?php 
                             echo ' /  (' . implode(', ', $carriages[$row['train_id']]) .')';
                             ?>
@@ -117,7 +117,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div style="height:250px; overflow:auto;">
                             <table class="table">
                                 <tr>
-                                    <th>Id pociągu</th>
+                                    <th>Id wagonu</th>
                                     <th>Liczba miejsc</th>
                                 </tr>
 
@@ -150,37 +150,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edytuj wagon <span id="modal-carriage-id"></span>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edytuj pociąg <span id="modal-carriage-id"></span>
                 </h5>
                 <button type="button" id="closeEdit" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="javascript:carriageEdit()">
+            <form action="javascript:trainEdit()">
                 <div class="modal-body">
 
                     <div class="mb-3 col-md-8">
-                        <label for="Modal-comps1" class="form-label">Przedziały</label>
-                        <input name="compartments" type="text" placeholder="np. 1, 2, 2, 4, 5"
-                            class="form-control formVal1" id="Modal-comps1" required>
-                        <input type="hidden" class="formVal1" name="carriage_id" id="modal-id">
+                        <label for="Modal-carriages1" class="form-label">Wagony</label>
+                        <input name="carriages" type="text" placeholder="np. 1, 2, 2, 4, 5"
+                            class="form-control formVal1" id="Modal-carriages1" required>
+                        <input type="hidden" class="formVal1" name="train_id" id="modal-id">
                     </div>
                     <div>
-                        <h5>Lista dostępnych przedziałów</h5>
+                        <h5>Lista dostępnych wagonów</h5>
                         <div style="height:250px; overflow:auto;">
                             <table class="table">
                                 <tr>
-                                    <th>Id przedziału</th>
+                                    <th>Id wagonu</th>
                                     <th>Liczba miejsc</th>
-                                    <th>Typ</th>
                                 </tr>
 
                                 <?php
-            foreach($compartments as $row){?>
+            foreach($modal as $index => $row){?>
                                 <tr>
-                                    <td id="id<?= $row['compartment_id'] ?>"><?= $row['compartment_id'] ?></td>
-                                    <td id="seats<?= $row['compartment_id'] ?>"><?= $row['quantity_seats'] ?></td>
-                                    <td id="type<?= $row['compartment_id'] ?>"><?= $row['type'] ?></td>
+                                    <td><?= $index ?></td>
+                                    <td><?= $row ?></td>
                                 </tr>
                                 <?php }?>
 
@@ -228,7 +226,7 @@ $('#closeAdd').click(function() {
 });
 
 $('.delete-trains').click(function(e) {
-    if (confirm("Czy na pewno chcesz usunąć ten wagon?")) {
+    if (confirm("Czy na pewno chcesz usunąć ten pociąg?")) {
         window.location.replace(e.target.getAttribute('data-value'));
     }
 });
@@ -241,7 +239,7 @@ $('.editBtns').click(function(e) {
     var index = e.target.getAttribute('data-value');
     $('#editModal').modal('show');
     $('#modal-carriage-id').html(index);
-    $('#Modal-comps1')[0].value = $("#compartments"+index)[0].getAttribute('data-value');
+    $('#Modal-carriages1')[0].value = $("#carriages"+index)[0].getAttribute('data-value');
     $('#modal-id')[0].value = index;
 });
 

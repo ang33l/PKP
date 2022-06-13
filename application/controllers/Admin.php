@@ -418,6 +418,96 @@ class Admin extends CI_Controller {
             )));
         }
 
-        
+        $this->load->model('Train_model');
+        $carriages = explode(',',str_replace(' ', '', $this->input->post('carriages')));
+
+        $response = $this->Train_model->verify_carriages($carriages);
+
+        if($response){
+            $response = $this->Train_model->add_train($carriages);
+            if($response){
+                return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'success',
+                    'message' => 'Pomyślnie dodano pociąg!'
+                )));
+            } else{
+                return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nie udało się dodać pociągu do bazy!'
+                )));
+            }
+        } else {
+            return $this->output->set_content_type('application/json', 'utf-8')
+            ->set_status_header(200)
+            ->set_output(json_encode(array(
+                'type' => 'danger',
+                'message' => 'Podany wagon nie istnieje!'
+            )));
+        }
+    }
+
+    public function trainDelete($id)
+    {
+        if($id<1){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Błędne dane!'
+                )));
+        }
+
+        $this->load->model('Train_model');
+
+        $this->Train_model->delete_train($id);
+
+        header("Location: ".base_url().'admin/trains');
+    }
+
+    public function trainEdit()
+    {
+        if(!$this->input->post('train_id') || !$this->input->post('carriages')){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Błędne dane!'
+                )));
+        }
+        $this->load->model("Train_model");
+        $train_id = $this->input->post('train_id');
+        $carriages = explode(',',str_replace(' ', '', $this->input->post('carriages')));
+
+        $response = $this->Train_model->verify_carriages($carriages);
+
+        if($response){
+            $response = $this->Train_model->edit_train($train_id, $carriages);
+            if($response){
+                return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'success',
+                    'message' => 'Pomyślnie zmodyfikowano pociąg!'
+                )));
+            } else {
+                return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nie udało się zmodyfikować pociągu!'
+                )));
+            }
+        } else {
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Podany wagon nie istnieje!'
+                )));
+        }
     }
 }
