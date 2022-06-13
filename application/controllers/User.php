@@ -15,6 +15,10 @@ class User extends CI_Controller {
 
     public function settings()
     {
+        if(!$this->session->loggedIn){
+            header("Location: ".base_url());
+            die();
+        }
         $header['page_title'] = "Ustawienia"; /* tytuł, który będzie widoczny na pasku */
 		$header['nav_item'] = "account"; /* home / search / ticket / account */
 		$this->load->view('header', $header);
@@ -23,6 +27,10 @@ class User extends CI_Controller {
 
     public function changePassword()
     {
+        if(!$this->session->loggedIn){
+            header("Location: ".base_url());
+            die();
+        }
         if(!$this->input->post("old_pass") || !$this->input->post("new_pass") || !$this->input->post("re_new_pass")){
             return $this->output->set_content_type('application/json', 'utf-8')
                 ->set_status_header(200)
@@ -58,6 +66,10 @@ class User extends CI_Controller {
 
     public function account()
     {
+        if(!$this->session->loggedIn){
+            header("Location: ".base_url());
+            die();
+        }
         $header['page_title'] = "Konto";
 		$header['nav_item'] = "account";
 		$this->load->view('header', $header);

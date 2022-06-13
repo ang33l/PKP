@@ -3,6 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 
+    public function __construct()
+    {
+        parent::__construct();
+        if(!$this->session->loggedIn){
+            header("Location: ".base_url());
+            die();
+        } else{
+            if($this->session->user_type_id>2){
+                header("Location: ".base_url());
+                die();
+            }
+        }
+    }
 	public function index()
 	{
 		$header['page_title'] = "Panel admina"; /* tytuł, który będzie widoczny na pasku */

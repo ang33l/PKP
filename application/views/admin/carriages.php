@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url() ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= base_url() ?>admin">Panel admina</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Trasy</li>
+            <li class="breadcrumb-item active" aria-current="page">Wagony</li>
         </ol>
     </nav>
     <nav>
