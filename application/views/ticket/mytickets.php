@@ -48,6 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <p>PKP Online</p>
                 <hr>
                 <p>Historia zakupionych biletów</p>
+                <?=$this->pagination_bootstrap->render()?>
                 <table class="table">
                         <tr>
                             <td>Ilość	</td>

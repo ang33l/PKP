@@ -92,7 +92,15 @@ class Ticket extends CI_Controller {
 		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
 		$this->load->view('header', $header);
         $user_id = $this->session->user_id;
-        $data['records'] = $this->Ticket_model->show($user_id);
+
+        $this->load->library('Pagination_bootstrap');
+
+        $sql=$this->db->query("SELECT COUNT(*) AS ilosc, `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = end) AS end, (SELECT connections_stops.date FROM connections_stops WHERE stops_id = start) AS date, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id GROUP BY buytime ORDER BY BUYTIME DESC" );
+        $url = base_url('ticket/mytickets/page');
+        $this->pagination_bootstrap->offset(8);
+        $data['records'] = $this->pagination_bootstrap->config($url,$sql);
+
+        //$data['records'] = $this->Ticket_model->show($user_id);
         $this->load->view('/ticket/mytickets',$data);
     }
 
@@ -123,7 +131,7 @@ class Ticket extends CI_Controller {
         $data['records'] = $this->Ticket_model->showAll();
         $this->load->view('/ticket/showalltickets',$data);
     }
-
+    
     public function details($ticket_id)
     {
         $header['page_title'] = "Kupno biletu"; /* tytuł, który będzie widoczny na pasku */

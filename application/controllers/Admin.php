@@ -363,14 +363,11 @@ class Admin extends CI_Controller {
 		$this->load->view('header', $header);
 
         $this->load->library('Pagination_bootstrap');
-        $this->db->select('ticket_id, user_name, connection_id, train_id, position, compartment, active, buytime, start, end, payment');
-        $this->db->from('tickets');
-        $this->db->join('user', 'tickets.user_id = user.user_id');
-        $sql = $this->db->get();
+
+        $sql = $this->db->query("SELECT t.ticket_id, user.user_name, t.connection_id, t.position, t.active, t.buytime, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.end) AS end, t.payment FROM tickets t INNER JOIN user ON t.user_id=user.user_id INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.name = 'head_admin' AND active=1 ORDER BY t.buytime DESC, t.ticket_id DESC; ");
         $url = base_url('admin/tickets/page');
         $this->pagination_bootstrap->offset(20);
         $data['records'] = $this->pagination_bootstrap->config($url,$sql);
-
 
         //$data['records'] = $this->Ticket_model->showAll();
         $this->load->view('/admin/tickets',$data);
@@ -379,7 +376,8 @@ class Admin extends CI_Controller {
     {
         $this->load->model('Ticket_model');
         $this->Ticket_model->cancelTicket($ticketId);
-        redirect(base_url().'admin/tickets/'.$ticketId);
+        $url = base_url('admin/tickets/page');
+        redirect($url);
     }
 
     public function trains()
