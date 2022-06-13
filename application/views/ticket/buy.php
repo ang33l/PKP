@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <p>Czas odjazdu: <?php echo $this->session->date_from?> </p>
                 <p>Czas przyjazdu: <?php echo $this->session->date_to?> </p>
                 
+                <?php echo validation_errors(); ?>
                 <form action="<?= site_url() ?>ticket/confirmation" method="post"> 
                     <div class="mb-3">
                         <label for="NumberOfSeats" class="form-label">Ilość miejsc</label>
