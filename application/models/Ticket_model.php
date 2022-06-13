@@ -25,7 +25,7 @@ class Ticket_model extends CI_Model {
     public function show($user_id)
     {
         // $query=$this->db->query("SELECT `ticket_id`, `user_id`, `connection_id`, `train_id`, `position`, `compartment`, `active`, `buytime`, `start`, `end`, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id");
-        $query=$this->db->query("SELECT COUNT(*) AS ilosc, `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = end) AS end, (SELECT connections_stops.date FROM connections_stops WHERE stops_id = start) AS date, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id GROUP BY buytime" );
+        $query=$this->db->query("SELECT COUNT(*) AS ilosc, `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = end) AS end, (SELECT connections_stops.date FROM connections_stops WHERE stops_id = start) AS date, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id GROUP BY buytime ORDER BY BUYTIME DESC" );
         return $query->result();
     }
     public function cancelTicket($idTicket)
@@ -44,7 +44,7 @@ class Ticket_model extends CI_Model {
     }
     public function showAll()
     {
-        $query=$this->db->query("SELECT t.ticket_id, user.user_name, t.connection_id, t.position, t.active, t.buytime, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.end) AS end, t.payment FROM tickets t INNER JOIN user ON t.user_id=user.user_id INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.name = 'head_admin' AND active=1; ");
+        $query=$this->db->query("SELECT t.ticket_id, user.user_name, t.connection_id, t.position, t.active, t.buytime, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.end) AS end, t.payment FROM tickets t INNER JOIN user ON t.user_id=user.user_id INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.name = 'head_admin' AND active=1 ORDER BY t.buytime DESC; ");
         return $query->result();
     }
     public function ticketsDetails($user_id, $ticket_id)
