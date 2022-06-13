@@ -361,7 +361,18 @@ class Admin extends CI_Controller {
         $header['page_title'] = "Wszystkie bilety bilety"; /* tytuł, który będzie widoczny na pasku */
 		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
 		$this->load->view('header', $header);
-        $data['records'] = $this->Ticket_model->showAll();
+
+        $this->load->library('Pagination_bootstrap');
+        $this->db->select('ticket_id, user_name, connection_id, train_id, position, compartment, active, buytime, start, end, payment');
+        $this->db->from('tickets');
+        $this->db->join('user', 'tickets.user_id = user.user_id');
+        $sql = $this->db->get();
+        $url = base_url('admin/tickets/page');
+        $this->pagination_bootstrap->offset(20);
+        $data['records'] = $this->pagination_bootstrap->config($url,$sql);
+
+
+        //$data['records'] = $this->Ticket_model->showAll();
         $this->load->view('/admin/tickets',$data);
     }
     public function cancel($ticketId)

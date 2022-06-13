@@ -53,47 +53,38 @@ class Ticket extends CI_Controller {
         } else {
             header("Location: ".base_url()."ticket/buy");
         }
-        
-            
-        //} else {
-            
-        //}
-        
-        
     }
     public function addToBase()
     {
-        $this->form_validation->set_rules('blikCode', 'blik', 'required');
-        
-        if ($this->form_validation->run() == TRUE ) {
-            $payment=$this->input->post('payment');
-            $numSeats=$this->input->post('numSeats');
-            $user_id = $this->session->user_id;
-            $id_connection = $this->session->connection_id;
-            $id_start = $this->session->id_start;
-            $id_end = $this->session->id_end;
-            $from = $this->session->from;
-            $where = $this->session->where;
-            // $seats=$this->input->post('seats');
-
-            $response=$this->Ticket_model->saverecords($numSeats, $user_id, $id_connection, $payment, $id_start, $id_end); 
-            if($response==true) {
-                ?>
-                    
-                <script type="text/javascript">
-                        alert("Zakup zrealizowany!");
-                            
-                    </script>
-                <?php
-                //echo "Records Saved Successfully";
+            $this->form_validation->set_rules('blikCode', 'blik', 'required');
+            if ($this->form_validation->run() == FALSE AND $this->input->post('payment') == 1) {
+                header("Location: ".base_url()."ticket/buy");
             } else {
-                echo "Insert error !";
+                $payment=$this->input->post('payment');
+                $numSeats=$this->input->post('numSeats');
+                $user_id = $this->session->user_id;
+                $id_connection = $this->session->connection_id;
+                $id_start = $this->session->id_start;
+                $id_end = $this->session->id_end;
+                $from = $this->session->from;
+                $where = $this->session->where;
+                // $seats=$this->input->post('seats');
+
+                $response=$this->Ticket_model->saverecords($numSeats, $user_id, $id_connection, $payment, $id_start, $id_end); 
+                if($response==true) {
+                    ?>
+                        
+                    <script type="text/javascript">
+                            alert("Zakup zrealizowany!");
+                                
+                        </script>
+                    <?php
+                    //echo "Records Saved Successfully";
+                } else {
+                    echo "Insert error !";
+                }
+                header("Location: ".base_url()."ticket/mytickets");
             }
-            
-            header("Location: ".base_url()."ticket/mytickets");
-        } else {
-            header("Location: ".base_url()."ticket/buy");
-        }
     }
     public function myTickets()
     {
