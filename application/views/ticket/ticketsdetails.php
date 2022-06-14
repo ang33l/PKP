@@ -60,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <tr>
                             <td>Numer biletu	</td>
                             <!-- <td>ID user	</td> -->
-                            <td>Numer polaczenia	</td>
+                            <!-- <td>Numer polaczenia	</td> -->
                             <!-- <td>ID pociagu </td> -->
                             <!-- <td>miejsce	</td> -->
                             <!-- <td>przedzial</td> -->
@@ -79,7 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <tr>
                             <td><?php echo $row->ticket_id; ?></td>
                             <!-- <td><?php echo $row->user_id; ?></td> -->
-                            <td><?php echo $row->connection_id; ?></td>
+                            <!-- <td><?php echo $row->connection_id; ?></td> -->
                             <!-- <td><?php echo $row->train_id; ?></td> -->
                             <!-- <td><?php echo $row->position; ?></td> -->
                             <!-- <td><?php echo $row->compartment; ?></td> -->
