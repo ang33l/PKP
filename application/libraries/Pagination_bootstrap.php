@@ -72,6 +72,21 @@ class Pagination_Bootstrap {
     $this->CI->pagination->initialize($config);
 
     return $this->result();
+    if($get->num_rows() == 0) {
+      return 1;
+    } else {
+      $config['total_rows'] = $get->num_rows();
+      $config['per_page'] = $this->offset;
+
+      $currentPage = $this->CI->uri->segment(4);
+      $currentPage = $currentPage==0?0:$currentPage;
+
+      $this->init = $currentPage;
+
+      $this->CI->pagination->initialize($config);
+
+      return $this->result();
+    }
   }
 
 
@@ -184,3 +199,4 @@ class Pagination_Bootstrap {
   }
 
 }
+

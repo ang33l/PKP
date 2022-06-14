@@ -82,6 +82,14 @@ class Admin extends CI_Controller {
                     'message' => 'Brak danych!'
                 )));
         }
+        if($this->input->post('user_id') == 1){
+            return $this->output->set_content_type('application/json', 'utf-8')
+                ->set_status_header(200)
+                ->set_output(json_encode(array(
+                    'type' => 'danger',
+                    'message' => 'Nie masz uprawnień, aby zmienić typ tego użytkownika!'
+                )));
+        }
         $this->load->model('User_model');
         $user = $this->User_model;
         $response = $user->change_user_privilage($this->input->post('type'),$this->input->post('user_id'));
@@ -381,14 +389,24 @@ class Admin extends CI_Controller {
         $header['page_title'] = "Wszystkie bilety bilety"; /* tytuł, który będzie widoczny na pasku */
 		$header['nav_item'] = "ticket"; /* home / search / ticket / account */
 		$this->load->view('header', $header);
-        $data['records'] = $this->Ticket_model->showAll();
+
+        $this->load->library('Pagination_bootstrap');
+
+        $sql = $this->db->query("SELECT t.ticket_id, user.user_name, t.connection_id, t.position, t.active, t.buytime, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = t.end) AS end, t.payment FROM tickets t INNER JOIN user ON t.user_id=user.user_id INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.name = 'head_admin' AND active=1 ORDER BY t.buytime DESC, t.ticket_id DESC; ");
+        $url = base_url('admin/tickets/page');
+        $this->pagination_bootstrap->offset(20);
+        $data['records'] = $this->pagination_bootstrap->config($url,$sql);
+        if($this->pagination_bootstrap->config($url,$sql) == 1) {
+            $data['records'] = $this->Ticket_model->showAll();
+        }
         $this->load->view('/admin/tickets',$data);
     }
     public function cancel($ticketId)
     {
         $this->load->model('Ticket_model');
         $this->Ticket_model->cancelTicket($ticketId);
-        redirect(base_url().'admin/tickets/'.$ticketId);
+        $url = base_url('admin/tickets/page');
+        redirect($url);
     }
 
     public function trains()

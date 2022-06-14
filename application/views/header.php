@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <ul>
                     <li><a class="nav-link <?= $nav_item == "home" ? "active":"" ?>" href="<?= base_url() ?>">Home</a></li>
                     <li><a class="nav-link <?= $nav_item == "search" ? "active":"" ?>" href="<?= base_url() ?>search">Wyszukaj połączenie kolejowe</a></li>
-                    <li><a class="nav-link <?= $nav_item == "ticket" ? "active":"" ?>" href="<?= base_url() ?>ticket/buy">Kup bilet</a></li>
+                    <li><a class="nav-link <?= $nav_item == "ticket" ? "active":"" ?>" href="<?= base_url() ?>search">Kup bilet</a></li>
                     <li><a class="nav-link" href="<?= base_url() ?>#contact">Kontakt</a></li>
                     <?php if($this->session->user_type_id == 1 || $this->session->user_type_id == 2){
                         echo '<li><a class="nav-link ';

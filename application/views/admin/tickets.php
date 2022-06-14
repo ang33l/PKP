@@ -44,13 +44,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </li>
             <li>
                 <a class="nav-link active" href="<?= base_url() ?>admin/tickets">Bilety</a>
-                <!-- <a class="nav-link active" href="<?= base_url() ?>admin/compartments">Bilety</a> -->
             </li>
         </ul>
     </nav>
     <section>
     <div class="col-xs-12">
         <h5>Zarządzaj biletami użytkowików</h5>
+        <?=$this->pagination_bootstrap->render()?>
         <table class="table">
             <tr>
                 <td>Numer biletu	</td>
@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             
             <tr>
                 <td><?php echo $row->ticket_id; ?></td>
-                <td><?php echo $row->user_name; ?></td>
+                <td><?php echo $row->user_name; ?></td> 
                 <td><?php echo $row->connection_id; ?></td>
                 <!-- <td><?php echo $row->train_id; ?></td> -->
                 <!-- <td><?php echo $row->position; ?></td> -->

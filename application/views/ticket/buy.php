@@ -46,11 +46,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <h2>Kup bilet</h2>
                 <p>PKP Online</p>
                 <hr>
-
-                <p>Kupno biletu na trasie: <?php echo $this->session->from?> - <?php echo $this->session->to?> </p>
-                <p>Czas odjazdu: <?php echo $this->session->date_from?> </p>
-                <p>Czas przyjazdu: <?php echo $this->session->date_to?> </p>
+                <?php
+                    $_SESSION['from'] = $_GET['from'];
+                    $_SESSION['to'] = $_GET['to'];
+                    $_SESSION['date_from'] = $_GET['date_from'];
+                    $_SESSION['date_to'] = $_GET['date_to'];
+                    $_SESSION['connection_id'] = $_GET['connection_id'];
+                    $_SESSION['id_start'] = $_GET['id_start'];
+                    $_SESSION['id_end'] = $_GET['id_end'];
+                ?>
+                <p>Kupno biletu na trasie: <?php echo $this->session->from?> - <?php echo $this->session->to?> </p> 
+                <!-- <p>Kupno biletu na trasie: <?php echo $_GET['from']?> - <?php echo $_GET['to']?> -->
+                <p>Czas odjazdu: <?php echo $this->session->date_from?> </p> 
+                <!-- <p>Czas odjazdu: <?php echo $_GET['date_from'];?> </p> -->
                 
+                <p>Czas przyjazdu: <?php echo $this->session->date_to?> </p> 
+                <!-- <p>Czas przyjazdu: <?php echo $_GET['date_to'];?> </p> -->
+                <?php echo validation_errors(); ?>
                 <form action="<?= site_url() ?>ticket/confirmation" method="post"> 
                     <div class="mb-3">
                         <label for="NumberOfSeats" class="form-label">Ilość miejsc</label>

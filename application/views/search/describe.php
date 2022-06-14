@@ -65,16 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <td><?= $row['to'] ?></td>
                         <td><?= $row['date_from'] ?></td>
                         <td><?= $row['date_to'] ?></td>
-                        <?php
-                        $_SESSION['from'] = $row['from'];
-                        $_SESSION['to'] = $row['to'];
-                        $_SESSION['date_from'] = $row['date_from'];
-                        $_SESSION['date_to'] = $row['date_to'];
-                        $_SESSION['connection_id'] = $row['connection_id'];
-                        $_SESSION['id_start'] = $row['id_start'];
-                        $_SESSION['id_end'] = $row['id_end'];
-                        ?>
-                        <td><a href="<?php echo base_url().'ticket/buy'?>" class="btn btn-primary">Kup</a></td>
+                        <td><a href="<?php echo base_url().'ticket/buy?from='.$row['from']."&to=".$row['to']."&date_from=".$row['date_from']."&date_to=".$row['date_to']."&connection_id=".$row['connection_id']."&id_start=".$row['id_start']."&id_end=".$row['id_end']?>" class="btn btn-primary">Kup</a></td>
                     </tr>
                     <?php }?>
                 </table>
