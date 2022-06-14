@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
-                <a href="<?php echo base_url().'search/connections'?>" class="btn btn-danger float-end">Cofnij</a>
+                <a href="<?php echo base_url().'admin/connections'?>" class="btn btn-danger float-end">Cofnij</a>
                 <h2>Edytuj połączenie</h2>
                 <p>PKP Online</p>
                 <hr>
@@ -74,12 +74,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
 conf = {
-    //altInput: true,
     enableTime: true,
-    dateFormat: "Y-m-d H:i:S",
+    dateFormat: "Y-m-d H:i",
     time_24hr: true,
-    enableSeconds: true
-    //minDate: "today"
+    minDate: "today",
+    maxDate: new Date().fp_incr(30)
 }
 
 flatpickr("#pick_date", conf);

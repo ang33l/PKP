@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="bg">
         <div class="center-screen">
             <div class="col-xs-12 col-md-4 bg-light p-4 rounded">
-                <a href="<?php echo base_url().'search/connections'?>" class="btn btn-danger float-end">Cofnij</a>
+                <a href="<?php echo base_url().'admin/connections'?>" class="btn btn-danger float-end">Cofnij</a>
                 <h2>Dodaj nowe przystanki</h2>
                 <p>PKP Online</p>
 
@@ -91,7 +91,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="col-md-4 mb-3">
                         <button class="btn btn-danger remove_item_btn d-grid">Usuń</button>
                     </div>
-                    </div>`);
+                    </div>`
+                    );
         });
         $(document).on('click', '.remove_item_btn', function(e){
             e.preventDefault();
@@ -101,17 +102,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }); 
 </script>
 
-<!--
 <script>
-conf = {
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    time_24hr: true,
-    //enableSeconds: true
-    //minDate: "today"
-}
+    window.addEventListener('load', () => {
+        var now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
 
-flatpickr(".picker", conf);
+        now.setMilliseconds(null);
+        now.setSeconds(null);
+
+        document.getElementById('pick_date').value = now.toISOString().slice(0, -1);
+    });
+
+    $('#pick_date').datepicker({ 
+        min: date()
+    });
 </script>
--->
 </html>

@@ -14,28 +14,28 @@ class Search extends CI_Controller {
     function keyword()
     {
         $header['page_title'] = "Wyszukiwanie połączeń"; /* tytuł, który będzie widoczny na pasku */
-		$header['nav_item'] = "search"; /* home / search / ticket / account */
-		$this->load->view('header', $header);
-        $this->load->model('Search_model');
+        $header['nav_item'] = "search"; /* home / search / ticket / account */
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('from-where','skad','required');
+        $this->form_validation->set_rules('to-where','dokad','required');
 
-        $from=$this->input->post('from-where');
-        $to=$this->input->post('to-where');
-        $date=$this->input->post('depature-time');
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->load->view('header', $header);
+            $this->load->view('/search/search');
+        } else {
+            $this->load->view('header', $header);
+            $this->load->model('Search_model');
 
-        $data['records'] = $this->Search_model->search($from,$to,$date);
-        $this->load->view('/search/describe',$data);
+            $from=$this->input->post('from-where');
+            $to=$this->input->post('to-where');
+            $date=$this->input->post('depature-time');
+
+            $data['records'] = $this->Search_model->search($from,$to,$date);
+            $this->load->view('/search/describe',$data);
+        }    
     }
 
-
-    public function connections()
-    {
-        $header['page_title'] = "Edytuj bilety"; /* tytuł, który będzie widoczny na pasku */
-		$header['nav_item'] = "search"; /* home / search / ticket / account */
-		$this->load->view('header', $header);
-        $this->load->model('Search_model');
-        $data['records'] = $this->Search_model->show();
-        $this->load->view('/admin/connections',$data);
-    }
 
     public function deleteconn($stops_id)
     {

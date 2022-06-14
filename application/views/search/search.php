@@ -49,18 +49,18 @@ html {
                 <form action="<?php echo base_url().'search/keyword'; ?>" method="post">
                     <div class="mb-3">
                         <label for="" class="form-label">Skąd</label>
-                        <input name="from-where" type="text" class="form-control" required>
+                        <input name="from-where" id="from-where" type="text" class="form-control" placeholder="Skąd" required >
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Dokąd</label>
-                        <input name="to-where" type="text" class="form-control" required>
+                        <input name="to-where" type="text" class="form-control" placeholder="Dokąd" required>
                     </div>
                     <div class="mb-3" class="form-label">
                         <label for="">Wybierz datę</label>
-                        <input name="depature-time" id="pick_date" type="datetime-local" class="form-control" />
+                        <input name="depature-time" id="pick_date"  value="<?php echo date('Y-m-d\TH:i'); ?>" type="datetime-local" class="form-control" />
                     </div>
 
-                    <button type="submit" class="btn btn-primary" id="submitbtn">Wyszukaj połączenia</button>
+                    <button type="submit" id="search" class="btn btn-primary" id="submitbtn">Wyszukaj połączenia</button>
                 </form>
             </div>
         </div>
@@ -76,7 +76,8 @@ conf = {
     enableTime: true,
     dateFormat: "Y-m-d H:i",
     time_24hr: true,
-    //minDate: "today"
+    minDate: "today",
+    maxDate: new Date().fp_incr(30)
 }
 
 flatpickr("#pick_date", conf);

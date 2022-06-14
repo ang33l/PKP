@@ -108,7 +108,14 @@ class Admin extends CI_Controller {
 		$header['nav_item'] = "admin"; /* home / search / ticket / account */
 		$this->load->view('header', $header);
         $this->load->model('Search_model');
-        $data['records'] = $this->Search_model->show();
+
+        $this->load->library('Pagination_bootstrap');
+        $links=array('next'=>'Next', 'prev'=>'Previous');
+        $this->pagination_bootstrap->set_links($links);
+        $query=$this->db->query("SELECT stops_id, town, date, connection_id FROM connections_stops ORDER BY connection_id, date ;");
+        $this->pagination_bootstrap->offset(10);
+        $url = base_url('/admin/connections/page');
+        $data['records'] = $this->pagination_bootstrap->config($url, $query);
         $this->load->view('/admin/connections',$data);
     }
 

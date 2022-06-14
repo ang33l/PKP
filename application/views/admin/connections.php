@@ -75,6 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </tr>
             <?php }?>
         </table>
+        <?= $this->pagination_bootstrap->render()?>
     </div>
 </div>
 </div>

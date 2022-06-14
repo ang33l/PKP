@@ -26,13 +26,6 @@ class Search_Model extends CI_Model {
         return $arr;
     }
 
-    public function show()
-    {
-        $query=$this->db->query("SELECT stops_id, town, date, connection_id FROM connections_stops ORDER BY connection_id, date ;");
-    
-        return $query->result();
-    }
-
     public function delete($stop_id)
     {
         $query=$this->db->query("DELETE FROM connections_stops WHERE stops_id='$stop_id';");
