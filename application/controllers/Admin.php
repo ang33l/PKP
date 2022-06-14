@@ -368,8 +368,9 @@ class Admin extends CI_Controller {
         $url = base_url('admin/tickets/page');
         $this->pagination_bootstrap->offset(20);
         $data['records'] = $this->pagination_bootstrap->config($url,$sql);
-
-        //$data['records'] = $this->Ticket_model->showAll();
+        if($this->pagination_bootstrap->config($url,$sql) == 1) {
+            $data['records'] = $this->Ticket_model->showAll();
+        }
         $this->load->view('/admin/tickets',$data);
     }
     public function cancel($ticketId)

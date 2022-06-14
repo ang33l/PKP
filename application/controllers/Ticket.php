@@ -51,14 +51,14 @@ class Ticket extends CI_Controller {
             //$data = array_merge($wolne, $koszt);
             $this->load->view('/ticket/summary',$wolne + $cost);
         } else {
-            header("Location: ".base_url()."ticket/buy");
+            header("Location: ".base_url()."search");
         }
     }
     public function addToBase()
     {
             $this->form_validation->set_rules('blikCode', 'blik', 'required');
             if ($this->form_validation->run() == FALSE AND $this->input->post('payment') == 1) {
-                header("Location: ".base_url()."ticket/buy");
+                header("Location: ".base_url()."search");
             } else {
                 $payment=$this->input->post('payment');
                 $numSeats=$this->input->post('numSeats');
@@ -98,9 +98,11 @@ class Ticket extends CI_Controller {
         $sql=$this->db->query("SELECT COUNT(*) AS ilosc, `ticket_id`, `user_id`, `connection_id`, `position`, `active`, `buytime`, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = start) AS start, (SELECT connections_stops.town FROM connections_stops WHERE stops_id = end) AS end, (SELECT connections_stops.date FROM connections_stops WHERE stops_id = start) AS date, `payment` FROM `tickets` WHERE `active`=1 AND `user_id`=$user_id GROUP BY buytime ORDER BY BUYTIME DESC" );
         $url = base_url('ticket/mytickets/page');
         $this->pagination_bootstrap->offset(8);
-        $data['records'] = $this->pagination_bootstrap->config($url,$sql);
 
-        //$data['records'] = $this->Ticket_model->show($user_id);
+        $data['records'] = $this->pagination_bootstrap->config($url,$sql);
+        if($this->pagination_bootstrap->config($url,$sql) == 1) {
+            $data['records'] = $this->Ticket_model->show($user_id);
+        }
         $this->load->view('/ticket/mytickets',$data);
     }
 
